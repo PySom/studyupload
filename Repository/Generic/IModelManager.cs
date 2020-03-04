@@ -13,6 +13,8 @@ namespace StudyMATEUpload.Repository.Generics
         ValueTask<(bool, TModel, string)> Add(TModel model);
         ValueTask<(bool, ICollection<TModel>, string)> Add(IEnumerable<TModel> models);
         ValueTask<(bool, TModel, string)> Update(TModel model);
+        void UpdatePartly(TModel model);
+        Task<(bool, string)> SaveChangesAsync();
 
         ValueTask<(bool, string)> Delete(TModel model);
         ValueTask<(bool, string)> Delete(IEnumerable<TModel> model);

@@ -48,6 +48,11 @@ namespace StudyMATEUpload.Repository.Generics
             return (false, null, errorMessage);
         }
 
+        public void UpdatePartly(TModel model)
+        {
+            _ctx.Entry<TModel>(model).State = EntityState.Modified;
+        }
+
         public async ValueTask<(bool, TModel, string)> Update(TModel model)
         {
             string errorMessage = null; 
@@ -114,7 +119,7 @@ namespace StudyMATEUpload.Repository.Generics
 
         public async ValueTask<ICollection<TModel>> FindMany(Expression<Func<TModel, bool>> query) => await _ctx.Set<TModel>().Where(query).AsNoTracking().ToListAsync();
 
-        private async Task<(bool, string)> SaveChangesAsync()
+        public async Task<(bool, string)> SaveChangesAsync()
         {
             string errorMessage;
             try
