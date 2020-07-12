@@ -21,7 +21,7 @@ namespace StudyMATEUpload.Services
 			var mimeMessage = new MimeMessage();
 			mimeMessage.From.Add(new MailboxAddress(
 				"Contact",
-				"nchukumah@infomall.ng"
+				email
 			));
 			mimeMessage.Subject = !string.IsNullOrEmpty(subject) ? subject : "StudyMATE";
 			mimeMessage.Cc.Add(new MailboxAddress(email));
@@ -32,9 +32,9 @@ namespace StudyMATEUpload.Services
             mimeMessage.Body = builder.ToMessageBody() ?? new TextPart("plain");
 
 			using var client = new SmtpClient();
-			client.Connect("infomall.ng", 25, SecureSocketOptions.None);
+			client.Connect(smtp_connection_detail);
 			client.AuthenticationMechanisms.Remove("XOAUTH2");
-			client.Authenticate("nchukumah@infomall.ng", "osasere1994$");
+			client.Authenticate(email, password);
 			await client.SendAsync(mimeMessage);
 			_logger.LogInformation("message sent successfully...");
 			await client.DisconnectAsync(true);
@@ -46,7 +46,7 @@ namespace StudyMATEUpload.Services
 			var mimeMessage = new MimeMessage();
 			mimeMessage.From.Add(new MailboxAddress(
 				"Contact",
-                "contact@infomall.ng"
+				email
             ));
 			
 			foreach (string email in emails)
@@ -61,9 +61,9 @@ namespace StudyMATEUpload.Services
             mimeMessage.Body = builder.ToMessageBody() ?? new TextPart("plain");
 
 			using var client = new SmtpClient();
-			client.Connect("infomall.ng", 25, SecureSocketOptions.None);
+			client.Connect(smtp_connection_detail);
 			client.AuthenticationMechanisms.Remove("XOAUTH2");
-			client.Authenticate("contact@infomall.ng", "InfoMall01");
+			client.Authenticate(email, password);
 			await client.SendAsync(mimeMessage);
 			_logger.LogInformation("message sent successfully...");
 			await client.DisconnectAsync(true);
