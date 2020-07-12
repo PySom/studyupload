@@ -1,0 +1,244 @@
+.learn {
+  height: calc(100vh - 275px);
+  // overflow-y: hidden;
+  padding: 0 20px;
+  .mobile-screen {
+    display: none;
+  }
+  .heading {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    padding: 20px 30px;
+    margin: 0;
+    background-color: #fff;
+    text-transform: capitalize;
+    span {
+      font-size: 10px;
+      color: #c2c2c2;
+      font-weight: 300;
+    }
+  }
+  .verify {
+    background-color: red;
+    color: #fff;
+    width: 100%;
+    padding: 20px 50px;
+    z-index: 1000000000;
+    transform: scale(1.05);
+    font-size: 12px !important;
+    button {
+      height: 30px !important;
+      border: 1px solid #fff;
+      float: right;
+      background-color: red;
+      color: #fff;
+      padding: 0 20px;
+      position: relative;
+      top: -10px;
+      animation-name: grow;
+      animation-duration: 1.5s;
+      animation-iteration-count: 20;
+    }
+  }
+  .wide-side {
+    float: left;
+    width: 70%;
+    .lessons-wrap {
+      background-color: #fff;
+      padding-bottom: 0px;
+      .lessons {
+        height: 195px;
+        overflow: hidden;
+        margin-top: 0;
+      }
+      .sub-heading {
+        font-size: 14px;
+        margin-top: 0;
+        color: #aaaaaa;
+        padding: 30px;
+        margin-bottom: 0;
+        button {
+          padding: 12px 20px;
+          margin-top: -10px;
+        }
+      }
+      .lessons {
+        // height: 200px;
+        // overflow: auto;
+      }
+    }
+    .quizzes {
+      background-color: #fff;
+    }
+  }
+  .narrow-side {
+    float: right;
+    width: calc(30% - 30px);
+    .badge-wrap {
+      width: 100%;
+    }
+    .students {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px), (min-width: 768px) and (max-width: 1024px) {
+    overflow: auto;
+    .mobile-screen {
+      display: block;
+      height: 530px;
+      position: relative;
+      .medals {
+        text-align: center;
+        padding-top: 10px;
+        display: block;
+        .medal {
+          display: inline-block;
+          width: calc(100% / 6);
+          height: 30px;
+          margin: 10px 0;
+          text-align: center;
+          img {
+            height: 24px;
+            position: relative;
+            top: 2px;
+          }
+          span {
+            display: block;
+            position: relative;
+            top: 5px;
+            font-size: 12px;
+          }
+        }
+      }
+      .grid {
+        height: 330px;
+        overflow: hidden;
+        padding: 10px 0;
+        margin-top: 30px;
+        color: #fff;
+        .half {
+          float: left;
+          width: 48.5%;
+          height: 100%;
+          border-radius: 5px;
+          background-image: linear-gradient(#1099f5, #02318a);
+          position: relative;
+          span {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-weight: 600;
+            p {
+              margin: 2px 0 0 !important;
+            }
+          }
+          img {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 25px;
+          }
+        }
+        .halff {
+          float: right;
+          width: 48.5%;
+          height: 100%;
+          .qtr {
+            width: 100%;
+            height: 48%;
+            margin-bottom: 8%;
+            border-radius: 5px;
+            position: relative;
+            &.tt {
+              background-color: #11a3ff;
+            }
+            &.bb {
+              background-color: #ffa701;
+            }
+            span {
+              position: absolute;
+              bottom: 20px;
+              left: 20px;
+              font-weight: 600;
+            }
+            img {
+              position: absolute;
+              top: 20px;
+              left: 20px;
+              width: 25px;
+            }
+          }
+        }
+      }
+      .foot {
+        width: 60%;
+        margin: 0px 20%;
+        font-size: 10px;
+        position: absolute;
+        bottom: 20px;
+        text-align: center;
+        color: #b1b1b1;
+      }
+    }
+    .wide-side {
+      width: 100%;
+      display: none;
+      .lessons-wrap {
+        .lessons {
+          height: auto;
+        }
+      }
+    }
+    .narrow-side {
+      padding: 20px;
+      width: 100%;
+      display: none;
+      .students {
+        display: block;
+        width: 90%;
+        margin: 30px auto;
+      }
+    }
+    .verify {
+      position: absolute;
+      top: 4px;
+      transform: scale(1);
+      width: calc(100% - 40px);
+      height: 57px !important;
+      padding: 10px !important;
+      border-radius: 5px;
+      span {
+        display: inline-block;
+        width: 60%;
+        font-size: 13px;
+      }
+      button {
+        margin-top: -3px;
+        top: 5px !important;
+        padding: 0 10px;
+        border-radius: 5px;
+        font-size: 12px !important;
+      }
+    }
+  }
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.learnModal {
+  width: 80% !important;
+  max-width: 1000px;
+}

@@ -13,17 +13,24 @@
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.10.0" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.46.0" />
     <PackageReference Include="MailKit" Version="2.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0-preview.5.20278.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0-preview.5.20278.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0-preview.5.20278.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0-preview.5.20278.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.6.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.4.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.4.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
   </ItemGroup>
 
@@ -32,6 +39,25 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200607082824_InitMigration.cs" />
+    <Compile Remove="Migrations\20200607082824_InitMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200607084154_InitMigration.cs" />
+    <Compile Remove="Migrations\20200607084154_InitMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200608184829_UpdatedVideo1.cs" />
+    <Compile Remove="Migrations\20200608184829_UpdatedVideo1.Designer.cs" />
+    <Compile Remove="Migrations\20200625042117_Mode.cs" />
+    <Compile Remove="Migrations\20200625042117_Mode.Designer.cs" />
+    <Compile Remove="Migrations\20200710070937_DeleteField.cs" />
+    <Compile Remove="Migrations\20200710070937_DeleteField.Designer.cs" />
+    <Compile Remove="Migrations\20200710071211_DeleteField.cs" />
+    <Compile Remove="Migrations\20200710071211_DeleteField.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

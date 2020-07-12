@@ -1,0 +1,44 @@
+<svg id="Component_6_1" data-name="Component 6 – 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1128" height="1086" viewBox="0 0 1128 1086">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#002984"/>
+      <stop offset="1" stop-color="#001648"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_3" data-name="Rectangle 3" width="1128" height="1086" transform="translate(0.45 -6)" fill="url(#linear-gradient)"/>
+    </clipPath>
+    <linearGradient id="linear-gradient-3" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#10a3ff"/>
+      <stop offset="1" stop-color="#002984"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#cdd9ff"/>
+      <stop offset="1" stop-color="#f6f9ff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-7" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#cddaf1"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-8" x1="0.317" y1="1.808" x2="0.317" y2="0.701" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#a7aeff"/>
+      <stop offset="1" stop-color="#a9b3ff"/>
+    </linearGradient>
+  </defs>
+  <g id="Mask_Group_34" data-name="Mask Group 34" transform="translate(-0.45 6)" clip-path="url(#clip-path)">
+    <g id="Rectangle_1421" data-name="Rectangle 1421" transform="translate(-17.55 -36)" stroke="#707070" stroke-width="1" fill="url(#linear-gradient)">
+      <rect width="1174" height="1147" stroke="none"/>
+      <rect x="0.5" y="0.5" width="1173" height="1146" fill="none"/>
+    </g>
+    <g id="Group_7335" data-name="Group 7335" transform="translate(-6443.58 -1189)">
+      <g id="Group_7334" data-name="Group 7334" transform="translate(5674.426 1183)">
+        <path id="Path_6091" data-name="Path 6091" d="M0,0H2970.443V1160.055L0,1080.5Z" transform="translate(200.505)" fill="url(#linear-gradient-3)"/>
+        <path id="Path_6092" data-name="Path 6092" d="M140.942,0s627.417,148.162,1109.49,230.209,1063.415,170.8,1063.415,170.8S1373.891,200.5,1112.726,63.122L1938.68,228.353S1596.674,120.674,1297.773,0Z" transform="translate(582.888)" fill-rule="evenodd" opacity="0.2" fill="url(#linear-gradient-4)" style="mix-blend-mode: soft-light;isolation: isolate"/>
+        <path id="Path_6093" data-name="Path 6093" d="M609.667,0s351.5,87.877,706.717,100.252c0,0-370.693-56.932-537.468-100.252Z" transform="translate(1854.564)" fill-rule="evenodd" opacity="0.2" fill="url(#linear-gradient-4)" style="mix-blend-mode: soft-light;isolation: isolate"/>
+        <path id="Path_6094" data-name="Path 6094" d="M-54,68.01S2198.238,293.233,3116.948,264.148V436.694l-1323.325,2.362-55.536,90.1L259.263,502.2,979.636,442.65-20.274,290.756Z" transform="translate(54 184.515)" fill-rule="evenodd" opacity="0.2" fill="url(#linear-gradient-4)" style="mix-blend-mode: soft-light;isolation: isolate"/>
+        <path id="Path_6095" data-name="Path 6095" d="M771.112,197.507a166.761,166.761,0,0,1-3.082-17.637A74.413,74.413,0,0,1,771.112,197.507Z" transform="translate(2284.211 487.997)" fill-rule="evenodd" opacity="0.79" fill="url(#linear-gradient-7)" style="mix-blend-mode: multiply;isolation: isolate"/>
+        <path id="Path_6103" data-name="Path 6103" d="M740.105,84.55a332.407,332.407,0,0,0,63.787,5.2c-4.938.438-9.13-4.014-10.579-8.752s-.973-9.821-1.366-14.763a42.108,42.108,0,0,0-7.783-21.179c-8.77-12.142-25.772-18.888-39.507-12.91s-19.832,26.262-9.535,37.138c-6.943,1.43-42.789,2.18-49.732,3.609,4,4.534,44.868,10.244,54.715,11.655Z" transform="translate(2060.004 81.216)" fill-rule="evenodd" fill="url(#linear-gradient-8)"/>
+      </g>
+    </g>
+  </g>
+  <text id="Your_dependable_learning_buddy" data-name="Your dependable learning buddy" transform="translate(286 879)" fill="#fff" font-size="33" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="25">Your Dependable Learning Partner</tspan></text>
+</svg>

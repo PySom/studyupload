@@ -10,7 +10,6 @@ namespace StudyMATEUpload.Services
     {
         private const string default_Path = "assets";
         private readonly IWebHostEnvironment _env;
-        public static Random random = new Random(55);
         public ImageService(IWebHostEnvironment env)
         {
             _env = env;
@@ -20,8 +19,7 @@ namespace StudyMATEUpload.Services
             path = "";
             if (file != null)
             {
-                int randomId = random.Next(56, 1000);
-                var fileName = $"{randomId}{Path.GetFileName(file.FileName)}";
+                var fileName = Path.GetFileName(file.FileName);
                 path = Path.Combine(default_Path, fileName);
                 var absolutePath = Path.Combine(_env.WebRootPath, path);
 
@@ -47,8 +45,7 @@ namespace StudyMATEUpload.Services
                         System.IO.File.Delete(oldPath);
                     }
                 }
-                int randomId = random.Next(56, 1000);
-                var fileName = $"{randomId}{Path.GetFileName(file.FileName)}";
+                var fileName = Path.GetFileName(file.FileName);
                 path = Path.Combine(default_Path, fileName);
                 var absolutePath = Path.Combine(_env.WebRootPath, path);
 

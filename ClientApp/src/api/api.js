@@ -5,33 +5,33 @@ const all = (uri) =>
     axios
         .get(baseUrl + uri)
         .then(response => response.data)
-        .catch(err => console.log(err))
+        .catch(err => { throw new Error(err.response.data) })
 
 
 const create = (uri, personObject) =>
     axios
         .post(baseUrl + uri, personObject)
         .then(response => response.data)
-        .catch(err => console.log(err))
+        .catch(err => { throw new Error(err.response.data) })
 
-const get = async (url) =>
-    await axios
-            .get(baseUrl + url)
-            .then(response => response.data)
-            .catch(err => { throw new Error(err) })
+const get = (url) =>
+            axios
+                .get(baseUrl + url)
+                .then(response => response.data)
+        .catch(err => { throw new Error(err.response.data) })
 
-const remove = (id) =>
+const remove = (url) =>
     axios
-        .delete(baseUrl + id)
+        .delete(baseUrl + url)
         .then()
         .catch()
 
 
-const update = (personObject) =>
+const update = (url, personObject) =>
     axios
-        .put(baseUrl + personObject.id, personObject)
+        .put(baseUrl + url, personObject)
         .then(response => response.data)
-        .catch(err => console.log(err))
+        .catch(err => { throw new Error(err.response.data) })
 
 
 export default

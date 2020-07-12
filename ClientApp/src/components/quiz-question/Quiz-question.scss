@@ -1,0 +1,405 @@
+.quiz-quuestion {
+  position: relative;
+  .custom-img {
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+  	-moz-transition: all 1s ease; /* Firefox */
+  	-o-transition: all 1s ease; /* IE 9 */
+  	-ms-transition: all 1s ease; /* Opera */
+  	transition: all 1s ease;
+}
+
+.custom-img:hover {
+    // -webkit-transform:scale(4); /* Safari and Chrome */
+    // -moz-transform:scale(4); /* Firefox */
+    // -ms-transform:scale(4); /* IE 9 */
+    // -o-transform:scale(4); /* Opera */
+    //  transform:scale(4);
+    width: 100% !important;
+    cursor: zoom-out;
+    z-index: 100
+}
+
+  .close {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 24px;
+    z-index: 100;
+    img {
+      width: 20px;
+      float: right;
+      margin-top: -5px;
+      cursor: pointer;
+      width: 20px;
+      float: right;
+      margin-top: -5px;
+      cursor: pointer;
+    }
+  }
+  .upper {
+    padding: 30px 40px;
+    height: 720px;
+    position: relative;
+    .upper-bar {
+      position: relative;
+      width: 98%;
+    }
+    .instruction {
+      color: rgba(45, 47, 57, 0.76);
+      font-size: 16px;
+      margin-bottom: 18px;
+      .time {
+        width: 20px;
+        position: absolute;
+        right: 50px;
+        top: -20px;
+        min-width: 210px;
+        cursor: pointer;
+        font-size: 36px;
+        background-color: #f8f8f8;
+        text-align: center;
+        padding: 5px;
+      }
+    }
+    .alert {
+      position: absolute;
+      top: 455px;
+      right: 0px;
+      overflow: hidden;
+      width: 350px;
+      height: 135px;
+      z-index: 12323;
+      background: #fff;
+      padding: 12px 25px;
+      border-radius: 10px;
+      border: 1px solid #dddddd;
+      .badge {
+        width: 70px;
+        position: relative;
+        top: -10px;
+      }
+      .streak-text {
+        display: inline-block;
+        width: 76%;
+        padding-left: 16px;
+        position: relative;
+        top: -10px;
+        .top {
+          font-weight: 600;
+          position: relative;
+          top: 5px;
+          margin-bottom: 10px;
+          color: #000;
+          .ex {
+            width: 10px;
+            float: right;
+            position: relative;
+            top: -5px;
+            right: -5px;
+            cursor: pointer;
+          }
+          p {
+            font-size: 14px;
+          }
+        }
+        .blue--text {
+          cursor: pointer;
+        }
+      }
+    }
+    .content {
+      width: 60%;
+      display: inline-block;
+      height: 555px;
+      overflow: auto;
+      .questions {
+        // max-height: 440px;
+        // overflow: auto;
+      }
+      .question {
+        font-size: 17px;
+        line-height: 28px;
+        font-weight: 600;
+        padding-bottom: 30px;
+        padding: 10px 0 30px;
+        border-bottom: 1px solid #eee;
+        img {
+          width: 120px;
+        }
+      }
+      .answer {
+        min-height: 50px;
+        cursor: pointer;
+        font-size: 12px;
+        position: relative;
+        &:hover {
+          background-color: #fafafa;
+        }
+        .label {
+          display: inline-block;
+          width: 25px;
+          height: 25px;
+          border-radius: 50%;
+          color: #000;
+          border: 1px solid #eee;
+          border-radius: 50%;
+          font-size: 12px;
+          text-align: center;
+          position: absolute;
+          top: 13px;
+          line-height: 25px !important;
+        }
+        .caveat {
+          margin: 0;
+          position: relative;
+          top: -25px;
+          font-size: 12px;
+          color: #c4c4c4 !important;
+          left: 52px;
+          font-weight: 600;
+          width: 80%;
+        }
+        p {
+          display: inline-block;
+          font-size: 16px;
+          margin-left: 50px;
+          // margin-bottom: 30px;
+          width: calc(100% - (25px + 60px));
+        }
+      }
+      .correct {
+        color: #14ac00 !important;
+        .label {
+          background-color: #14ac00 !important;
+          color: #fff;
+        }
+      }
+      .lock:hover {
+        cursor: not-allowed;
+      }
+      .wrong {
+        color: #b40505 !important;
+        .label {
+          background-color: #b40505 !important;
+          color: #fff;
+        }
+      }
+      .correct_ {
+        color: #10a3ff;
+        .label {
+          background-color: #10a3ff;
+          color: #fff;
+        }
+      }
+      .feedback {
+        padding: 20px 0 30px;
+        border-top: 1px solid #eee;
+        font-style: italic;
+        font-style: 10px;
+        cursor: pointer;
+      }
+    }
+    .passage {
+      width: 40%;
+      display: inline-block;
+      padding: 20px 40px;
+      position: absolute;
+      top: 100px;
+      line-height: 26px;
+      max-height: 570px;
+      overflow: auto;
+      color: #000;
+      text-align: justify;
+      margin-bottom: 40px;
+    }
+    .formm {
+      background: #fafafa;
+      border: 0.5px solid #7070701f;
+      border-radius: 6px;
+      color: #2d2f39;
+      padding: 20px;
+      margin: 0 5%;
+      width: 30%;
+      text-align: left;
+      .top {
+        font-style: 16px;
+        font-weight: 600;
+        margin: 0;
+      }
+      .sub {
+        font-size: 14px;
+      }
+      .radio {
+        display: block;
+        margin-bottom: 15px;
+        font-size: 14px;
+        input {
+          transform: scale(1.4);
+          margin-right: 15px;
+        }
+      }
+      textarea {
+        border: 0.5px solid #7070701f;
+        width: 100%;
+        padding: 20px;
+        height: 70px;
+        margin-bottom: 10px;
+      }
+      button {
+        padding: 0 30px !important;
+      }
+      .cancel {
+        position: relative;
+        top: -0px;
+        left: 30px;
+        color: #aaaaaa;
+        cursor: pointer;
+      }
+    }
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #eee;
+    padding: 18px 50px;
+    height: 80px;
+    width: 100%;
+    background-color: #fff;
+    button {
+      float: right;
+      padding: 0 30px;
+    }
+  }
+  .passage_,
+  .content_ {
+    width: 50% !important;
+    font-size: 36px;
+    div {
+      padding-top: 30px;
+    }
+    img {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px), (min-width: 768px) and (max-width: 1024px) {
+    background-color: #fff;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    height: 100vh;
+    .close {
+      cursor: pointer;
+      right: 15px;
+      top: 15px;
+      img {
+        width: 20px;
+        float: right;
+        margin-top: 3px;
+      }
+    }
+    .upper {
+      padding: 0;
+      height: calc(100vh - 85px);
+      overflow: auto;
+      position: relative;
+      .upper-bar {
+        position: relative;
+        width: 84%;
+      }
+      .instruction {
+        margin-top: 50px;
+      }
+      .content {
+        width: 100%;
+        height: auto;
+        padding-top: 10px;
+        .questions {
+          overflow-x: hidden;
+          overflow-y: auto;
+        }
+        .question {
+          color: #000;
+        }
+        .answer {
+          color: #000;
+          p {
+            width: 87%;
+          }
+        }
+      }
+      .alert {
+        position: absolute;
+        top: 60vh;
+        right: -55px;
+        overflow: hidden;
+        width: 280px;
+        height: 116px;
+        z-index: 12323;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #dddddd;
+        .badge {
+          width: 51px;
+          display: inline-block;
+          // position: relative;
+          top: 10px;
+        }
+        .streak-text {
+          display: inline-block;
+          width: 94%;
+          padding-left: 63px;
+          top: -70px;
+          color: #000;
+          .top {
+            .ex {
+              right: -10px;
+            }
+          }
+          p {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+    .passage {
+      height: auto;
+      max-height: unset !important;
+      padding: 12px !important;
+    }
+    .passage_,
+    .content_ {
+      width: 100% !important;
+      font-size: 36px;
+      div {
+        color: #000;
+        padding: 50px 0;
+        font-size: 20px;
+        // height: 212px;
+        line-height: 30px;
+        text-align: center;
+      }
+      img {
+        width: 100%;
+      }
+    }
+    .footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      color: #000;
+      padding: 15px;
+      height: 110px;
+      b {
+        font-size: 12px;
+      }
+      button {
+        padding: 0 5px;
+        font-size: 12px !important;
+      }
+    }
+  }
+}

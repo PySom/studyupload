@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using StudyMATEUpload.Data;
-using StudyMATEUpload.Repository.Generics;
 using StudyMATEUpload.Models;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -30,7 +29,7 @@ namespace StudyMATEUpload.Repository.Generics
             try
             {
                 await _ctx.Set<TModel>().AddAsync(model);
-                await _ctx.SaveChangesAsync();
+                _ctx.SaveChanges();
                 return (true, model, errorMessage);
             }
             catch (DbUpdateConcurrencyException ex)
@@ -77,6 +76,30 @@ namespace StudyMATEUpload.Repository.Generics
             return (false, null, errorMessage);
         }
 
+        public (bool, ICollection<TModel>, string) Update(ICollection<TModel> models)
+        {
+            string errorMessage = null;
+            try
+            {
+                _ctx.UpdateRange(models);
+                _ctx.SaveChanges();
+                return (true, models, errorMessage);
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                errorMessage = ex.Message;
+            }
+            catch (DbUpdateException ex)
+            {
+                errorMessage = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
+            }
+            return (false, null, errorMessage);
+        }
+
         public async ValueTask<(bool, ICollection<TModel>, string)> Add(IEnumerable<TModel> models)
         {
             string errorMessage;
@@ -101,6 +124,23 @@ namespace StudyMATEUpload.Repository.Generics
             return (false, null, errorMessage);
         }
 
+        public async ValueTask<(bool, string)> Hide(TModel model)
+        {
+            model.Deleted = true;
+            _ctx.Entry<TModel>(model).State = EntityState.Modified;
+            return await SaveChangesAsync();
+        }
+
+        public async ValueTask<(bool, string)> Hide(IEnumerable<TModel> models)
+        {
+            foreach (var model in models)
+            {
+                model.Deleted = true;
+                _ctx.Entry<TModel>(model).State = EntityState.Modified;
+            }
+            return await SaveChangesAsync();
+        }
+
         public async ValueTask<(bool, string)> Delete(TModel model)
         {
             _ctx.Entry<TModel>(model).State = EntityState.Deleted;
@@ -115,9 +155,12 @@ namespace StudyMATEUpload.Repository.Generics
             }
             return await SaveChangesAsync();
         }
-        public async ValueTask<TModel> FindOne(Expression<Func<TModel, bool>> query) => await _ctx.Set<TModel>().Where(query).AsNoTracking().FirstOrDefaultAsync();
 
-        public async ValueTask<ICollection<TModel>> FindMany(Expression<Func<TModel, bool>> query) => await _ctx.Set<TModel>().Where(query).AsNoTracking().ToListAsync();
+        public async ValueTask<TModel> FindOne(Expression<Func<TModel, bool>> query) => 
+            await _ctx.Set<TModel>().Where(query).AsNoTracking().FirstOrDefaultAsync();
+
+        public async ValueTask<ICollection<TModel>> FindMany(Expression<Func<TModel, bool>> query) => 
+            await _ctx.Set<TModel>().Where(query).AsNoTracking().ToListAsync();
 
         public async Task<(bool, string)> SaveChangesAsync()
         {
@@ -144,7 +187,4 @@ namespace StudyMATEUpload.Repository.Generics
 
         public DbSet<TModel> Item() => _ctx.Set<TModel>();
     }
-
-    
-    
 }

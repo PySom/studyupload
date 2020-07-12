@@ -1,0 +1,29 @@
+.days {
+  //   display: flex;
+  //   flex-flow: wrap;
+  //   justify-content: space-between;
+  padding: 20px;
+  .day {
+    width: calc(100% / 7);
+    text-align: center;
+    display: inline-block;
+    .ball {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid #dbdbdb;
+      margin: auto;
+      &.present {
+        background-color: #0097f5;
+        border: 1px solid #0097f5;
+      }
+    }
+    span {
+      font-size: 10px;
+      color: #b3b3b3;
+      &.came {
+        color: #383838;
+      }
+    }
+  }
+}

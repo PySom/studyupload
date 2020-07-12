@@ -1,0 +1,287 @@
+.subject {
+  height: 100vh;
+  .banner {
+    height: 130px;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 0 160px;
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    background-image: url("../../assets/images/Banner.svg");
+    position: relative;
+    .mobile-title-text {
+      font-size: 12px;
+      padding: 10px 25px;
+      background-color: #5eade4;
+      color: #fff;
+      position: absolute;
+      bottom: 45px;
+      left: 20px;
+      border-radius: 25px;
+      display: none;
+    }
+    .back {
+      position: absolute;
+      bottom: 30px;
+    }
+  }
+  .sub-banner {
+    height: 75px;
+    line-height: 75px;
+    background: #ffffff;
+    box-shadow: 0px 3px 6px #0000000d;
+    padding: 0 160px;
+    overflow: hidden;
+    position: relative;
+    z-index: 100;
+    .small {
+      width: 24%;
+      float: left;
+      border-right: 1px solid #eee;
+      span {
+        font-size: 14px;
+        position: relative;
+        top: -10px;
+      }
+      p {
+        position: relative;
+        top: -85px;
+        font-size: 22px;
+      }
+    }
+    .wide {
+      width: 76%;
+      float: left;
+      white-space: nowrap;
+      overflow: hidden;
+      height: 80px;
+      border-right: 1px solid #eee;
+      .progresses {
+        overflow-x: auto;
+        overflow-y: hidden;
+        height: 95px;
+      }
+      .progress-wrap {
+        width: 550px;
+        display: inline-block;
+        padding: 25px 30px;
+        span {
+          color: rgb(53, 53, 53);
+          font-size: 13px;
+          top: -25px;
+          position: relative;
+        }
+      }
+    }
+  }
+  .heading {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    padding: 20px 30px;
+    margin: 30px 0 0;
+    background-color: #fff;
+    span {
+      font-size: 10px;
+      color: #c2c2c2;
+      font-weight: 300;
+    }
+  }
+  .contents {
+    padding: 0px 160px;
+    background-color: #fafafa;
+    height: calc(100vh - (75px + 130px + 75px));
+    overflow: hidden;
+    .small {
+      width: 24%;
+      float: left;
+      padding-right: 70px;
+      padding-top: 30px;
+      .header {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .level {
+        padding: 15px 0;
+        font-size: 12px;
+        font-weight: 600;
+        position: relative;
+        cursor: pointer;
+        // border-bottom: 1px solid #eee;
+        span {
+          padding-left: 50px;
+        }
+        .band {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-image: linear-gradient(#0d92ed, #02358f);
+          text-align: center;
+          display: inline-block;
+          position: absolute;
+          left: 20px;
+          .inner {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin: 3px;
+            background-color: #fff;
+          }
+        }
+        &.active {
+          color: #fff;
+          background-color: #0097f5;
+          border-radius: 10px;
+        }
+      }
+      img {
+        width: 90%;
+        float: left;
+        margin-top: 40px;
+      }
+    }
+    .wide {
+      width: 76%;
+      float: left;
+      height: calc(100vh - (75px + 130px + 75px));
+      overflow: auto;
+      &.narrow {
+        display: none;
+      }
+      .lessons-wrap {
+        background-color: #fff;
+        padding-bottom: 20px;
+        .lessons {
+        }
+        .sub-heading {
+          font-size: 14px;
+          margin-top: 0;
+          color: #aaaaaa;
+          padding: 30px;
+          button {
+            padding: 12px 20px;
+            margin-top: -10px;
+          }
+        }
+        .lessons {
+          // height: 200px;
+          // overflow: auto;
+        }
+      }
+      .pack {
+        height: 500px;
+        margin-top: 100px;
+        .half {
+          width: 50%;
+          float: left;
+          height: 100%;
+          padding: 30px;
+          background-color: #fff;
+          .title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 85px;
+          }
+          .desc {
+            font-size: 14px;
+            font-weight: 18px;
+            line-height: 20px;
+          }
+          .duration {
+            font-size: 24px;
+            line-height: 28px;
+            font-weight: 600;
+            margin: 40px 0;
+            span {
+              display: block;
+            }
+          }
+          button {
+            padding: 0 20px;
+          }
+        }
+        .bg {
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-image: url("../../assets/images/Advanced\ test.svg");
+        }
+      }
+    }
+    .quiz {
+      background-color: #fff;
+    }
+  }
+
+  @media (max-width: 768px), (min-width: 768px) and (max-width: 1024px) {
+    padding: 0;
+    height: auto;
+    .banner {
+      font-size: 14px;
+      padding: 20px;
+      background-position-x: 83%;
+      .back {
+        position: absolute;
+        bottom: 20px;
+        img {
+          display: none;
+        }
+      }
+      .mobile-title-text {
+        display: block;
+      }
+    }
+    .sub-banner {
+      padding: 0 20px;
+      z-index: 10 !important;
+    }
+    .contents {
+      padding: 0px;
+      overflow: auto;
+      .small {
+        width: 100%;
+        padding: 0;
+        display: none;
+        img {
+          width: 60%;
+          margin: 30px 20%;
+        }
+      }
+      .wide {
+        width: 100%;
+        padding: 0;
+        height: calc(100vh - (75px + 130px + 75px));
+        &.narrow {
+          display: block;
+        }
+        &.big {
+          display: none;
+        }
+        .pack {
+          height: 320px;
+          .half {
+            width: 100%;
+            background-image: url("../../assets/images/Advanced\ test.svg");
+            color: #fff;
+            background-size: cover;
+            background-position-x: 73%;
+            background-position-y: 0px;
+            height: 560px;
+            p {
+              margin-top: 0px;
+            }
+            .tw-btn {
+              background-color: #fca702 !important;
+            }
+          }
+          .bg {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

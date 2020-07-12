@@ -1,0 +1,288 @@
+@import "./margins_padding.sass";
+
+@font-face {
+  font-family: helvetica;
+  src: url("./assets/fonts/Helvetica.ttc");
+}
+
+// global styles
+* {
+  box-sizing: border-box;
+  font-family: helvetica;
+  letter-spacing: 0.1px;
+}
+
+.App {
+  width: 100%;
+  height: 100vh;
+}
+.loader-wrap {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 123443545656565;
+  background-color: #00000049;
+  // opacity: 0.3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-align: center;
+  img {
+    margin-top: 40vh;
+    width: 80px;
+    animation-name: spin;
+    animation-duration: 500ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+}
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.inp-wrap {
+  position: relative;
+  .eye {
+    position: absolute;
+    right: 20px;
+    top: 40px;
+    width: 20px;
+    cursor: pointer;
+  }
+}
+
+//makeshift table
+
+.fixed-table {
+  .tr {
+    width: 100%;
+    font-size: 14px;
+    padding: 15px 0;
+    color: #474747;
+    &.thead {
+      font-weight: 600;
+      border-bottom: 1px solid #c2c2c2;
+    }
+    div {
+      display: inline-block;
+      width: 15%;
+    }
+    .activity {
+      width: 35%;
+    }
+    .points {
+      width: 20%;
+    }
+  }
+  .tbody {
+    height: 230px;
+    overflow: auto;
+  }
+}
+
+// helpers
+.f-right {
+  float: right;
+}
+
+.f-left {
+  float: left;
+}
+a {
+  color: #000;
+  text-decoration: none;
+}
+// texts
+.blue--text {
+  color: #0097f5;
+}
+
+// backgrounds
+.bg_1 {
+  background: #ff0301;
+}
+.bg_2 {
+  background: #ffa701;
+}
+.bg_3 {
+  background: #3c7702;
+}
+.bg_4 {
+  background: #0137af;
+}
+.bg_5 {
+  background: #1f3c44;
+}
+.bg_6 {
+  background: #ff4502;
+}
+.bg_7 {
+  background: #a7cc7c;
+}
+.bg_8 {
+  background: #910809;
+}
+.bg_9 {
+  background: #0036af;
+}
+.bg_10 {
+  background: #c69393;
+}
+.bg_11 {
+  background: #8b3e27;
+}
+.bg_12 {
+  background: #ff4500;
+}
+.bg_13 {
+  background: #1f3c43;
+}
+.bg_14 {
+  background: #910707;
+}
+.bg_15 {
+  background: #5563ff;
+}
+.bg_16 {
+  background: #73519b;
+}
+.bg_white {
+  background-color: #fff;
+}
+
+.has-error {
+  border: 1px solid #ff6868 !important;
+  background-color: #fff6f6 !important;
+}
+
+input:focus {
+  outline: none;
+}
+
+// buttons
+button {
+  border: 0;
+  font-size: 14px !important;
+  height: 40px !important;
+  // line-height: 45px !important;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+  }
+}
+.main-btn {
+  background: #002984;
+  color: #fff;
+}
+.blue-btn {
+  background: #fff;
+  border: 1px solid #10a3ff;
+  color: #10a3ff;
+  &:hover {
+    background: #03a9f4;
+    color: #fff;
+    border: 1px solid #fff;
+  }
+}
+.fb-btn {
+  background: #1976d2;
+  color: #fff;
+}
+
+.tw-btn {
+  background: #03a9f4;
+  color: #fff;
+}
+
+.gg-btn {
+  background: #fff;
+  color: #000;
+  border: 0.30000001192092896px solid #f1f1f1;
+}
+
+// overrides
+.MJXc-display {
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+.carousel .slide {
+  background-color: transparent !important;
+}
+
+.css-1okebmr-indicatorSeparator {
+  display: none !important;
+}
+
+.css-yk16xz-control {
+  border: 1px solid #eee !important;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #e9e9e985;
+  // background-color: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #0097f5;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px), (min-width: 768px) and (max-width: 1024px) {
+  .fixed-table {
+    width: 100%;
+    overflow: auto;
+    .tbody,
+    .thead {
+      width: 200% !important;
+    }
+    .tbody {
+      height: auto;
+    }
+  }
+}

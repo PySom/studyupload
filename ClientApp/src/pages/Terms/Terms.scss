@@ -1,0 +1,69 @@
+.terms {
+  padding: 0px;
+  background-color: #fafafa;
+  height: 100vh;
+  .body {
+    height: calc(100vh - 80px);
+    overflow: auto;
+    .banner {
+      height: 130px;
+      width: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      padding: 0 160px;
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: #fff;
+      background-image: url("../../assets/images/dash.svg");
+      position: relative;
+      span {
+        position: absolute;
+        bottom: 30px;
+      }
+    }
+    .contents {
+      padding: 60px 240px;
+      text-align: justify;
+      p {
+        line-height: 26px;
+        margin-bottom: 35px;
+      }
+      .x-big {
+        font-size: 30px;
+        font-weight: 600;
+      }
+      .big {
+        font-size: 22px;
+        font-weight: 600;
+      }
+      ul {
+        li {
+          margin-bottom: 20px;
+          line-height: 30px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px), (min-width: 768px) and (max-width: 1024px) {
+    padding: 0;
+    overflow: auto;
+    .body {
+      .banner {
+        font-size: 14px;
+        padding: 20px;
+        background-position-x: 83%;
+        .backArrow {
+          display: none !important;
+        }
+        .mobile-title-text {
+          display: block !important;
+        }
+      }
+      .contents {
+        padding: 20px;
+      }
+    }
+  }
+}

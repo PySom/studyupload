@@ -1,0 +1,56 @@
+<svg id="Component_4_1" data-name="Component 4 – 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="734" height="1080" viewBox="0 0 734 1080">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_3" data-name="Rectangle 3" width="734" height="1080" transform="translate(0 -6)" fill="#001b57"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#10a3ff"/>
+      <stop offset="1" stop-color="#002984"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#cdd9ff"/>
+      <stop offset="1" stop-color="#f6f9ff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-5" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#cddaf1"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-6" x1="0.533" y1="0.845" x2="0.533" y2="-0.872" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#a7aeff"/>
+      <stop offset="1" stop-color="#a9b3ff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-7" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#c2d1ff"/>
+      <stop offset="1" stop-color="#e0eaff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-8" x1="0.317" y1="1.808" x2="0.317" y2="0.701" xlink:href="#linear-gradient-6"/>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.769" gradientTransform="translate(0.172 0.148) scale(0.65 0.65)" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="0.04" stop-color="#f1f1f1"/>
+      <stop offset="0.316" stop-color="#9d9d9d"/>
+      <stop offset="0.558" stop-color="#595959"/>
+      <stop offset="0.76" stop-color="#292929"/>
+      <stop offset="0.913" stop-color="#0b0b0b"/>
+      <stop offset="1"/>
+    </radialGradient>
+  </defs>
+  <g id="Mask_Group_34" data-name="Mask Group 34" transform="translate(0 6)" clip-path="url(#clip-path)">
+    <g id="Group_7335" data-name="Group 7335" transform="translate(-672.604 -20.744)">
+      <g id="Group_7334" data-name="Group 7334">
+        <path id="Path_6091" data-name="Path 6091" d="M0,0H2970.443V1174.357L0,1093.819Z" transform="translate(200.505)" fill="url(#linear-gradient)"/>
+        <path id="Path_6092" data-name="Path 6092" d="M140.942,0s627.417,147.343,1109.49,228.937S2313.847,398.794,2313.847,398.794,1373.891,199.4,1112.726,62.773L1938.68,227.091S1596.674,120.008,1297.773,0Z" transform="translate(582.888)" fill-rule="evenodd" opacity="0.2" fill="url(#linear-gradient-2)" style="mix-blend-mode: soft-light;isolation: isolate"/>
+        <path id="Path_6093" data-name="Path 6093" d="M609.667,0s351.5,87.391,706.717,99.7c0,0-370.693-56.618-537.468-99.7Z" transform="translate(1854.564)" fill-rule="evenodd" opacity="0.2" fill="url(#linear-gradient-2)" style="mix-blend-mode: soft-light;isolation: isolate"/>
+        <path id="Path_6094" data-name="Path 6094" d="M-54,68.01S2198.238,291.988,3116.948,263.065V434.657l-1323.325,2.348-55.536,89.6L259.263,499.8,979.636,440.58-20.274,289.525Z" transform="translate(54 190.603)" fill-rule="evenodd" opacity="0.2" fill="url(#linear-gradient-2)" style="mix-blend-mode: soft-light;isolation: isolate"/>
+        <path id="Path_6095" data-name="Path 6095" d="M771.112,197.41a165.006,165.006,0,0,1-3.082-17.54A73.633,73.633,0,0,1,771.112,197.41Z" transform="translate(2284.211 496.415)" fill-rule="evenodd" opacity="0.79" fill="url(#linear-gradient-5)" style="mix-blend-mode: multiply;isolation: isolate"/>
+        <path id="Path_6101" data-name="Path 6101" d="M469.043,88.092c56.7,10.21,125.379,15.029,163.244,16.591-2.261-3.482-55.246-19.958-57.471-22.8s-2.774-6.584-3.527-10.1c-3.071-14.39-11.184-28.133-23.819-35.777s-29.976-8.116-41.772.757c-7.816,5.875-12.268,18.337-5.306,25.191q-5.575-.709-11.154-1.411c6.576-8.386-.6-20.527-8.7-27.469-8.425-7.223-18.446-13.109-29.482-14.5-16.794-2.127-33.143,6.27-50.048,7.1-7.1.347-14.251-.643-21.28.369a38.032,38.032,0,0,0-26.184,16.772c-.954,1.481-1.831,3.194-1.5,4.918a7.716,7.716,0,0,0,2.458,3.711l11.306,11.373a27.061,27.061,0,0,1-11.885,1.067c17.032,3.342,30.766,13.23,47.223,16.742C423.231,85.338,446.876,84.1,469.043,88.092Z" transform="translate(1155.433 49.082)" fill-rule="evenodd" fill="url(#linear-gradient-6)"/>
+        <path id="Path_6102" data-name="Path 6102" d="M465.654,131.532s2.332-43.583,27.681-56.134c65.539-32.446,43.855,52.032,35.274,56.134,0,0,23.207-14.951,39.915,0s0,16.794,0,16.794L597.3,163.3,421.71,131.532Z" transform="translate(1344.626 187.993)" fill-rule="evenodd" fill="url(#linear-gradient-7)"/>
+        <path id="Path_6103" data-name="Path 6103" d="M740.105,84.248a334.209,334.209,0,0,0,63.787,5.173c-4.938.436-9.13-3.992-10.579-8.7s-.973-9.767-1.366-14.682a41.733,41.733,0,0,0-7.783-21.062c-8.77-12.075-25.772-18.784-39.507-12.839s-19.832,26.117-9.535,36.933c-6.943,1.422-42.789,2.168-49.732,3.589,4,4.509,44.868,10.188,54.715,11.591Z" transform="translate(2060.004 80.601)" fill-rule="evenodd" fill="url(#linear-gradient-8)"/>
+        <ellipse id="Ellipse_240" data-name="Ellipse 240" cx="558.722" cy="361.343" rx="558.722" ry="361.343" transform="translate(1618.735 46.904)" opacity="0.6" fill="url(#radial-gradient)" style="mix-blend-mode: screen;isolation: isolate"/>
+      </g>
+    </g>
+    <g id="Group_1399" data-name="Group 1399" transform="translate(-341.444 576.397)" opacity="0.257">
+      <path id="Path_3410" data-name="Path 3410" d="M936.912,791.782V297.939H878.2V210.928H814.553v61.444h-69.4V166.118H698.613v64.95H625.76v70.392H557.529V110.633H496.357v84.81H427.288V468.626H362.328V311.045H297.94v66.511H196.661V511.573H144V254.409H72.471V373.942H0v417.84Z" transform="translate(469.695 -110.633)" fill="#001b57" opacity="0.515"/>
+      <path id="Path_3411" data-name="Path 3411" d="M768.2,348.75V201.308H708.328v57.8h-65.29V159.155H599.261v61.1H530.728v66.219H466.542V106.959H409v79.782H354.02V747.727H823.433V348.75Z" transform="translate(-354.02 -66.912)" fill="#001b57" opacity="0.468"/>
+    </g>
+  </g>
+</svg>

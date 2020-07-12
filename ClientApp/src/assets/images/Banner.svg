@@ -1,0 +1,30 @@
+<svg id="Component_4_1" data-name="Component 4 – 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1523" height="258" viewBox="0 0 1523 258">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_1438" data-name="Rectangle 1438" width="1523" height="258" transform="translate(5145.815 1191.815)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="0.493" y1="0.815" x2="0.585" y2="-0.32" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#10a3ff"/>
+      <stop offset="1" stop-color="#002984"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#cdd9ff"/>
+      <stop offset="1" stop-color="#f6f9ff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-5" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#cddaf1"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+  </defs>
+  <g id="Mask_Group_37" data-name="Mask Group 37" transform="translate(-5145.815 -1191.815)" clip-path="url(#clip-path)">
+    <g id="Group_7335" data-name="Group 7335" transform="translate(5036.813 1166.107)">
+      <g id="Group_7334" data-name="Group 7334">
+        <path id="Path_6091" data-name="Path 6091" d="M0,0H1543.4V539.206L0,502.227Z" transform="translate(104.18)" fill="url(#linear-gradient)"/>
+        <path id="Path_6092" data-name="Path 6092" d="M140.942,0s326,68.867,576.476,107,552.536,79.39,552.536,79.39S781.565,93.2,645.868,29.34l429.154,76.8S897.321,56.091,742.016,0Z" transform="translate(235.15)" fill-rule="evenodd" opacity="0.2" fill="url(#linear-gradient-2)" style="mix-blend-mode: soft-light;isolation: isolate"/>
+        <path id="Path_6093" data-name="Path 6093" d="M609.667,0S792.3,40.846,976.867,46.6c0,0-192.607-26.463-279.261-46.6Z" transform="translate(670.714)" fill-rule="evenodd" opacity="0.2" fill="url(#linear-gradient-2)" style="mix-blend-mode: soft-light;isolation: isolate"/>
+        <path id="Path_6094" data-name="Path 6094" d="M-54,68.01S1116.232,172.7,1593.581,159.177v80.2L906,240.476l-28.856,41.88L108.767,269.828l374.3-27.681-519.54-70.6Z" transform="translate(54 49.366)" fill-rule="evenodd" opacity="0.2" fill="url(#linear-gradient-2)" style="mix-blend-mode: soft-light;isolation: isolate"/>
+        <path id="Path_6095" data-name="Path 6095" d="M769.631,188.068a70.143,70.143,0,0,1-1.6-8.2A31.309,31.309,0,0,1,769.631,188.068Z" transform="translate(817.873 130.561)" fill-rule="evenodd" opacity="0.79" fill="url(#linear-gradient-5)" style="mix-blend-mode: multiply;isolation: isolate"/>
+      </g>
+    </g>
+  </g>
+</svg>

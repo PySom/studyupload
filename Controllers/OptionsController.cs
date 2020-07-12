@@ -6,6 +6,7 @@ using StudyMATEUpload.Models;
 using StudyMATEUpload.Repository.Generics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace StudyMATEUpload.Controllers
 {
@@ -14,11 +15,15 @@ namespace StudyMATEUpload.Controllers
     public class OptionsController : ControllerBase
     {
         private readonly IModelManager<Option> _repo;
+        private readonly IModelManager<Quiz> _quiz;
         private readonly IMapper _mapper;
-        public OptionsController(IModelManager<Option> repo, IMapper mapper)
+        public OptionsController(IModelManager<Option> repo,
+            IModelManager<Quiz> quiz,
+            IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
+            _quiz = quiz;
         }
 
         [HttpGet]
@@ -45,13 +50,31 @@ namespace StudyMATEUpload.Controllers
             return NotFound();
         }
 
+
         [HttpPost]
-        public async ValueTask<IActionResult> Post([FromBody] Option model)
+        public async ValueTask<IActionResult> Post([FromBody] Option model, bool isCorrect)
         {
             if (ModelState.IsValid)
             {
                 (bool succeeded, Option option, string error) = await _repo.Add(model);
-                if (succeeded) return Ok(option);
+                if (succeeded)
+                {
+                    if (isCorrect)
+                    {
+                        
+                        try
+                        {
+                            var quiz = await _quiz.FindOne(c => c.Id == model.PracticeId && !c.Deleted);
+                            quiz.AnswerId = option.Id;
+                            var _ = await _quiz.Update(quiz);
+                        }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                    return Ok(option);
+                }
                 return BadRequest(new { Message = error });
             }
             return BadRequest(new { Errors = ModelState.Values.SelectMany(e => e.Errors).ToList() });
