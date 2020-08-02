@@ -96,21 +96,16 @@ namespace StudyMATEUpload.Controllers
             var data = await _repo.Item().Where(uc => uc.Id == id)
                                             .Include(uc => uc.UserTests)
                                                 .ThenInclude(ut => ut.UserQuizzes)
-                                                    .ThenInclude(uq => uq.Quiz)
                                             .Include(uc => uc.UserTests)
                                                 .ThenInclude(ut => ut.UserVideos)
                                             .Include(uc => uc.UserTests)
                                                 .ThenInclude(ut => ut.Test)
-                                                    .ThenInclude(t => t.Videos)
-                                            .Include(uc => uc.UserTests)
-                                                .ThenInclude(ut => ut.Test)
-                                                    .ThenInclude(t => t.Quizes)
                                             .FirstOrDefaultAsync();
 
             var tests = await _test.Item().Where(c => c.CourseId == data.CourseId)
                 .Include(c => c.Videos)
                 .Include(c => c.Quizes)
-                .Select(c => new { Quizzes = c.Quizes.Count, Videos = c.Videos.Count })
+                .Select(c => new { c.Id, Quizzes = c.Quizes.Count, Videos = c.Videos.Count })
                 .ToListAsync();
             float allQuizzes, allVideos, userQuizzes, userVideos, possiblePoints, userPoint, percentQuiz, percentVideo, percentMastery = 0;
             var activities = new List<Activity>();
@@ -157,8 +152,7 @@ namespace StudyMATEUpload.Controllers
                     ut.AddRange(userTest.UserQuizzes.Aggregate(new List<UserQuizClassification>(), (aggregate, current) =>
                     {
                         var agg = aggregate.Find(c => 
-                        c.Level == current.Quiz.Level 
-                        && c.UserTestId == current.UserTestId 
+                        c.UserTestId == current.UserTestId 
                         && c.DateTime.Date == current.DateTaken.Date);
                         if (agg != null)
                         {
@@ -172,7 +166,6 @@ namespace StudyMATEUpload.Controllers
                             { 
                                 UserTestId = current.UserTestId,
                                 TestId = current.UserTest.TestId,
-                                Level = current.Quiz.Level, 
                                 DateTime = current.DateTaken.Date, 
                                 UserQuizzes = new List<UserQuiz> { current } 
                             };
@@ -184,8 +177,7 @@ namespace StudyMATEUpload.Controllers
                     uv.AddRange(userTest.UserVideos.Aggregate(new List<UserVideoClassification>(), (aggregate, current) =>
                     {
                         var agg = aggregate.Find(c =>
-                        c.Level == current.Video.Level
-                        && c.UserTestId == current.UserTestId
+                        c.UserTestId == current.UserTestId
                         && c.DateTime.Date == current.DateWatched.Date);
                         if (agg != null)
                         {
@@ -199,7 +191,6 @@ namespace StudyMATEUpload.Controllers
                             {
                                 UserTestId = current.UserTestId,
                                 TestId = current.UserTest.TestId,
-                                Level = current.Video.Level,
                                 DateTime = current.DateWatched.Date,
                                 UserVideo = new List<UserVideo> { current }
                             };
@@ -221,16 +212,15 @@ namespace StudyMATEUpload.Controllers
                             aggregate += current.CorrectOption == current.UserOption ? 1 : 0;
                             return aggregate;
                         });
-                        var testQuiz = data.UserTests.Where(u => u.TestId == item.TestId).FirstOrDefault();
+                        var testQuiz = tests.Where(u => u.Id == item.TestId).FirstOrDefault();
                         if (testQuiz != null)
                         {
-                            totalQuizin = testQuiz.Test.Quizes.Count();
+                            totalQuizin = testQuiz.Quizzes;
                         }
                         activities.Add(new Activity
                         {
                             Description = "Quiz",
                             Date = item.DateTime.ToShortDateString(),
-                            Level = item.Level,
                             TestType = "Quiz",
                             Point = point,
                             Overall = $"{point}/{totalQuizin}",
@@ -245,16 +235,17 @@ namespace StudyMATEUpload.Controllers
                     {
                         var totalVideoin = 0;
                         var point = item.UserVideo.Count();
-                        var testQuiz = data.UserTests.Where(u => u.TestId == item.TestId).FirstOrDefault();
+                        var testQuiz = tests.Where(u => u.Id == item.TestId).FirstOrDefault();
                         if (testQuiz != null)
                         {
-                            totalVideoin = testQuiz.Test.Videos.Count();
+                            totalVideoin = testQuiz.Videos;
                         }
+
+                        point = point > totalVideoin ? totalVideoin : point;
                         activities.Add(new Activity
                         {
                             Description = "Video",
                             Date = item.DateTime.ToShortDateString(),
-                            Level = item.Level,
                             TestType = "Video",
                             Point = 0,
                             Overall = $"{point}/{totalVideoin}",

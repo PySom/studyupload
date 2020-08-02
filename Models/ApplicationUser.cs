@@ -27,6 +27,8 @@ namespace StudyMATEUpload.Models
         public string Image { get; set; }
         public float TestScore { get; set; }
         public bool IsVerified { get; set; }
+        [NotMapped]
+        public bool IsSubscribed { get; set; }
         public bool Deleted { get; set; }
         public DateTime VerifiedOn { get; set; }
         public Role Role { get; set; }

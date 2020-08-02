@@ -21,7 +21,7 @@ namespace StudyMATEUpload.Services
 			var mimeMessage = new MimeMessage();
 			mimeMessage.From.Add(new MailboxAddress(
 				"Contact",
-				email
+				"hello@studymate.ng"
 			));
 			mimeMessage.Subject = !string.IsNullOrEmpty(subject) ? subject : "StudyMATE";
 			mimeMessage.Cc.Add(new MailboxAddress(email));
@@ -32,9 +32,9 @@ namespace StudyMATEUpload.Services
             mimeMessage.Body = builder.ToMessageBody() ?? new TextPart("plain");
 
 			using var client = new SmtpClient();
-			client.Connect(smtp_connection_detail);
+			client.Connect("infomall.ng", 25, SecureSocketOptions.None);
 			client.AuthenticationMechanisms.Remove("XOAUTH2");
-			client.Authenticate(email, password);
+			client.Authenticate("hello@studymate.ng", "InfoMall01");
 			await client.SendAsync(mimeMessage);
 			_logger.LogInformation("message sent successfully...");
 			await client.DisconnectAsync(true);
@@ -46,14 +46,14 @@ namespace StudyMATEUpload.Services
 			var mimeMessage = new MimeMessage();
 			mimeMessage.From.Add(new MailboxAddress(
 				"Contact",
-				email
+				"hello@studymate.ng"
             ));
 			
 			foreach (string email in emails)
 			{
 				mimeMessage.Bcc.Add(new MailboxAddress(email));
 			}
-			mimeMessage.Subject = !string.IsNullOrEmpty(subject) ? subject : "Government Checker";
+			mimeMessage.Subject = !string.IsNullOrEmpty(subject) ? subject : "StudyMATE";
             BodyBuilder builder = new BodyBuilder
             {
                 HtmlBody = message
@@ -61,9 +61,9 @@ namespace StudyMATEUpload.Services
             mimeMessage.Body = builder.ToMessageBody() ?? new TextPart("plain");
 
 			using var client = new SmtpClient();
-			client.Connect(smtp_connection_detail);
+			client.Connect("infomall.ng", 25, SecureSocketOptions.None);
 			client.AuthenticationMechanisms.Remove("XOAUTH2");
-			client.Authenticate(email, password);
+			client.Authenticate("hello@studymate.ng", "InfoMall01");
 			await client.SendAsync(mimeMessage);
 			_logger.LogInformation("message sent successfully...");
 			await client.DisconnectAsync(true);

@@ -70,14 +70,14 @@ namespace StudyMATEUpload.Controllers
             return NotFound();
         }
 
-        [HttpGet("sane/{id:int}")]
-        public async ValueTask<IActionResult> GetSane(int id, StudyType study = StudyType.StudyMate)
+        [HttpGet("sane/{id:int}/user/{uid:int}")]
+        public async ValueTask<IActionResult> GetSane(int id, int uid, StudyType study = StudyType.StudyMate)
         {
             var model = await _repo.Item()
                     .Where(q => q.Id == id && q.StudyType == study)
                     .Include(t => t.Quizes.Where(q => q.IncludeThis))
                         .ThenInclude(q => q.Options)
-                    .Include(t => t.UserTests)
+                    .Include(t => t.UserTests.Where(ut => ut.UserCourse.UserId == uid))
                         .ThenInclude(u => u.UserQuizzes)
                     .FirstOrDefaultAsync();
             if (model == null) return NotFound();

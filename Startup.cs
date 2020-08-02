@@ -62,7 +62,8 @@ namespace StudyMATEUpload
                 builder =>
                 {
                     builder
-                        .AllowAnyOrigin()
+                        .WithOrigins("http://localhost:*", "http://localhost:3000", 
+                        "http://studymate.surge.sh", "https://*.studymate.ng", "http://*.studymate.ng", "https://studymate.ng")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });

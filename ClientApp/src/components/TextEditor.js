@@ -16,11 +16,13 @@ class TextEditor extends React.Component {
     constructor(props) {
         super(props)
         this.state = { showCode: false }
+        console.log(this.props.value)
         this.onChange = this.onChange.bind(this);
         this.onImageUpload = this.onImageUpload.bind(this);
     }
 
     onChange(content) {
+        console.log({ content })
         this.props.handleChange(content)
     }
     
@@ -44,27 +46,30 @@ class TextEditor extends React.Component {
     }
 
     render() {
-        console.log("value is", this.state.value)
+        console.log("value is", this.props.value)
+        const val = this.props.value
         return (
-            <ReactSummernote
-                value={this.props.value}
-                codeView={this.state.showCode}
-                options={{
-                    height: 100,
-                    dialogsInBody: false,
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['fontname', ['fontname']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
-                        ['view', ['fullscreen', 'codeview']]
-                    ]
-                }}
-                onChange={this.onChange}
-                onImageUpload={this.onImageUpload}
-            />
+                <ReactSummernote
+                    codeView={this.state.showCode}
+                    options={{
+                        height: 100,
+                        dialogsInBody: false,
+                        toolbar: [
+                            ['style', ['style']],
+                            ['font', ['bold', 'underline', 'clear']],
+                            ['fontname', ['fontname']],
+                            ['para', ['ul', 'ol', 'paragraph']],
+                            ['table', ['table']],
+                            ['insert', ['link', 'picture', 'video']],
+                            ['view', ['fullscreen', 'codeview']]
+                        ]
+                    }}
+                    value={this.props.value}
+                    defaultValue=""
+                    onChange={this.onChange}
+                    onImageUpload={this.onImageUpload}
+                />
+            
         );
     }
 }

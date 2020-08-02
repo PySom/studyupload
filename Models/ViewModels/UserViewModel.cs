@@ -20,6 +20,7 @@ namespace StudyMATEUpload.Models.ViewModels
         public string Image { get; set; }
         public Role Role { get; set; }
         public bool IsVerified { get; set; }
+        public bool IsSubscribed { get; set; }
         public string Token { get; set; }
     }
 

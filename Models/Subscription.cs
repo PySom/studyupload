@@ -12,9 +12,10 @@ namespace StudyMATEUpload.Models
         public string Name { get; set; }
         public bool Deleted { get; set; }
         public string Description { get; set; }
+        public float Amount { get; set; }
         public int TotalAllowable { get; set; }
         public byte Percentage { get; set; }
-        public TimeSpan Duration { get; set; }
+        public int Duration { get; set; }
     }
 
     namespace ViewModels
@@ -22,10 +23,11 @@ namespace StudyMATEUpload.Models
         public class SubscriptionViewModel
         {
             public string Name { get; set; }
+            public float Amount { get; set; }
             public string Description { get; set; }
             public int TotalAllowable { get; set; }
             public byte Percentage { get; set; }
-            public TimeSpan Duration { get; set; }
+            public int Duration { get; set; }
         }
     }
 

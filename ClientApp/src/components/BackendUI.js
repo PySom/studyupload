@@ -1,10 +1,11 @@
-﻿import React, { useState, useEffect, Suspense } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Layout } from './Layout';
 import './BackendUI.css';
 import MathJax from 'react-mathjax-preview'
 import parse from "html-react-parser";
 import api from '../api/api';
 import { useLocation } from 'react-router-dom';
+import TextEditor from './TextEditor';
 
 
 
@@ -217,9 +218,6 @@ const CourseList = () => {
 }
 
 const Course = ({ data, ...props }) => {
-    const location = useLocation();
-    console.log({ location })
-    const TextEditor = React.lazy(() => location.pathname === "/thankyouforyourwork" && import('./TextEditor'));
     const [testVisiblility, setTestVisibility] = useState(false)
     const [quizVisiblility, setQuizVisibility] = useState(false)
     const [quizId, setQuizId] = useState()
@@ -508,10 +506,10 @@ const Course = ({ data, ...props }) => {
                                         <div><b>Question {++index}:</b>
                                             <ParserCondition content={question} isMathJax={quiz.isQuestionMathJax} />
                                         </div>
-                                        <Suspense fallback={<p>Loading...</p>}>
-                                            <TextEditor value={question} id={`${data.name.toLowerCase().replace(' ', '-')}-q-${test.year}-${quiz.id}`} handleChange={(content) => handleQuestionChange(content)} />
+                                        <TextEditor value={question}
+                                            id={`${data.name.toLowerCase().replace(' ', '-')}-q-${test.year}-${quiz.id}`}
+                                            handleChange={(content) => handleQuestionChange(content)} />
 
-                                        </Suspense>
                                         <div>
                                             <input value={classNameQuestion} onChange={({ target: { value } }) => setClassNameQuestion(value)} />
                                             <button type="button" onClick={() => handleQuestionChange(question.Insert("img-responsive", classNameQuestion))}>Add Class</button>
@@ -521,15 +519,11 @@ const Course = ({ data, ...props }) => {
                                             <button type="button" onClick={() => handleQuestionChange(question.Remove(removeClassNameQuestion))}>Remove Class</button>
                                         </div>
                                         <p><b>Passage:</b> {passage || "No passage"}</p>
-                                        <Suspense fallback={<p>Loading...</p>}>
-                                            <TextEditor value={passage} id={`passage-o-${test.year}-${quiz.id}`} handleChange={(content) => handlePassageChange(content)} />
+                                        <TextEditor value={passage} id={`passage-o-${test.year}-${quiz.id}`} handleChange={(content) => handlePassageChange(content)} />
 
-                                        </Suspense>
                                         <p><b>Section:</b> {section || "No section"}</p>
-                                        <Suspense fallback={<p>Loading...</p>}>
-                                            <TextEditor value={section} id={`passage-o-${test.year}-${quiz.id}`} handleChange={(content) => handleSectionChange(content)} />
+                                        <TextEditor value={section} id={`passage-o-${test.year}-${quiz.id}`} handleChange={(content) => handleSectionChange(content)} />
 
-                                        </Suspense>
 
                                         <p><b>IsFirstPassge:</b> {quiz.isFirstPassage.toString()}</p>
                                         <p><b>IsFirstSection:</b> {quiz.isFirstSection.toString()}</p>
@@ -543,10 +537,8 @@ const Course = ({ data, ...props }) => {
                                             }>
                                                 <ParserCondition content={options[index]} isMathJax={option.isMathJax} />
                                                 {console.log("current option",options[index])}
-                                                <Suspense fallback={<p>Loading...</p>}>
-                                                    <TextEditor value={options[index]} id={`${data.name.toLowerCase().replace(' ', '-')}-o-${test.year}-${quiz.id}-${option.id}`} handleChange={(content) => handleChange(content, index)} />
+                                                <TextEditor value={options[index]} id={`${data.name.toLowerCase().replace(' ', '-')}-o-${test.year}-${quiz.id}-${option.id}`} handleChange={(content) => handleChange(content, index)} />
 
-                                                </Suspense>
                                                 <button className="primary btn-primary"
                                                     onClick={(e) => editOption(e, index, { ...option })}
                                                     type="button">Edit Option</button>
@@ -565,10 +557,8 @@ const Course = ({ data, ...props }) => {
 
                                         <p>--------------end of options----------------</p>
                                         <p className="text-success">-------------are you adding a new option?-----------</p>
-                                        <Suspense fallback={<p>Loading...</p>}>
-                                            <TextEditor value={optionToAdd} id={`${data.name.toLowerCase().replace(' ', '-')}-o-${test.year}-${quiz.id}-custom`} handleChange={(content) => setOptionToAdd(content)} />
+                                        <TextEditor value={optionToAdd} id={`${data.name.toLowerCase().replace(' ', '-')}-o-${test.year}-${quiz.id}-custom`} handleChange={(content) => setOptionToAdd(content)} />
 
-                                        </Suspense>
                                         <input type="checkbox" value={optionIsCorrect} onChange={({ target: { checked } }) => setOptionIsCorrect(checked)} /> <span>Is this the correct option? </span>
                                         <button className="primary btn-primary"
                                             onClick={(e) => addOption(quiz.id)}
@@ -578,28 +568,20 @@ const Course = ({ data, ...props }) => {
                                         <p className="text-success">-------------are you adding a new question?-----------</p>
                                         <p>Question: </p>
                                         <p><ParserCondition content={newQuestion} isMathJax={newQuestion.includes('\\(')} /></p>
-                                        <Suspense fallback={<p>Loading...</p>}>
-                                            <TextEditor value={newQuestion} id={`${data.name.toLowerCase().replace(' ', '-')}-o-${test.year}-${quiz.id}-custom`} handleChange={(content) => setNewQuestion(content)} />
+                                        <TextEditor value={newQuestion} id={`${data.name.toLowerCase().replace(' ', '-')}-o-${test.year}-${quiz.id}-custom`} handleChange={(content) => setNewQuestion(content)} />
 
-                                        </Suspense>
                                         <p>Passage: </p>
                                         <p><ParserCondition content={newPassage} isMathJax={newPassage.includes('\\(')} /></p>
-                                        <Suspense fallback={<p>Loading...</p>}>
-                                            <TextEditor value={newPassage} id={`${data.name.toLowerCase().replace(' ', '-')}-o-${test.year}-${quiz.id}-custom`} handleChange={(content) => setNewPassage(content)} />
+                                        <TextEditor value={newPassage} id={`${data.name.toLowerCase().replace(' ', '-')}-o-${test.year}-${quiz.id}-custom`} handleChange={(content) => setNewPassage(content)} />
 
-                                        </Suspense>
                                         <p>Section: </p>
                                         <p><ParserCondition content={newSection} isMathJax={newSection.includes('\\(')} /></p>
-                                        <Suspense fallback={<p>Loading...</p>}>
-                                            <TextEditor value={newSection} id={`${data.name.toLowerCase().replace(' ', '-')}-o-${test.year}-${quiz.id}-custom`} handleChange={(content) => setNewSection(content)} />
+                                        <TextEditor value={newSection} id={`${data.name.toLowerCase().replace(' ', '-')}-o-${test.year}-${quiz.id}-custom`} handleChange={(content) => setNewSection(content)} />
 
-                                        </Suspense>
                                         <p>Answer to this question: </p>
                                         <p><ParserCondition content={newAnswer} isMathJax={newAnswer.includes('\\(')} /></p>
-                                        <Suspense fallback={<p>Loading...</p>}>
-                                            <TextEditor value={newAnswer} id={`${data.name.toLowerCase().replace(' ', '-')}-o-${test.year}-${quiz.id}-custom`} handleChange={(content) => setNewAnswer(content)} />
+                                        <TextEditor value={newAnswer} id={`${data.name.toLowerCase().replace(' ', '-')}-o-${test.year}-${quiz.id}-custom`} handleChange={(content) => setNewAnswer(content)} />
 
-                                        </Suspense>
                                         <p>Audio URL: </p>
                                         <p>{newAudio}</p>
                                         <input type="text" value={newAudio} onChange={({ target: value }) => setNewAudio(value)} />
@@ -610,10 +592,8 @@ const Course = ({ data, ...props }) => {
                                         <p>-------------------------------End of adding new question----------------------------------------------</p>
                                         <p><b>Answer description: </b></p>
                                         <ParserCondition content={answer} isMathJax={quiz.answerUrl ? quiz.answerUrl.includes("\\(") : false} />
-                                        <Suspense fallback={<p>Loading...</p>}>
-                                            <TextEditor value={answer} id={`${data.name.toLowerCase().replace(' ', '-')}-a-${test.year}-${quiz.id}`} handleChange={(content) => handleAnswerChange(content)} />
+                                        <TextEditor value={answer} id={`${data.name.toLowerCase().replace(' ', '-')}-a-${test.year}-${quiz.id}`} handleChange={(content) => handleAnswerChange(content)} />
 
-                                        </Suspense>
                                         <br />
                                         <button type="button" onClick={(e) => previousQuiz(e, quiz.id)}>Previous</button>
                                         <button type="button" onClick={(e) => nextQuiz(e, quiz.id)}>Next</button>
@@ -684,7 +664,7 @@ const HtmlParse = ({ question }) => {
 const MathJaxParse = ({ question }) => {
     console.log(question)
     return (
-        <MathJax math={parse(question)} />
+        <MathJax math={question} />
     )
 }
 

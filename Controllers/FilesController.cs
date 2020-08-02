@@ -209,7 +209,7 @@ namespace LAAPI.Controllers
                                     break;
                                 case Rep.Question:
                                     
-                                    quiz = new Quiz { Question = mainText, TestId = test.Id, QuestionNumber = totalQuestions+1, IsQuestionMathJax = HasMathJax(mainText) };
+                                    quiz = new Quiz { Question = mainText, TestId = test.Id, QuestionNumber = totalQuestions+1, IncludeThis = true, IsQuestionMathJax = HasMathJax(mainText) };
                                     (bool quizSucceeded, Quiz newQuiz, string quizError) = await _quiz.Add(quiz);
                                     if (quizSucceeded)
                                     {

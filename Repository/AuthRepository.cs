@@ -11,7 +11,7 @@ namespace StudyMATEUpload.Repository
 {
     public class AuthRepository
     {
-        public string GetToken(string email, string role)
+        public string GetToken(string email, string role, bool isActive, TimeSpan duration, bool hasDuration)
         {
             //get key
             string key = Startup.Configuration[AppConstant.Secret];
@@ -25,6 +25,10 @@ namespace StudyMATEUpload.Repository
                 new Claim(ClaimTypes.Role, role),
                 new Claim(ClaimTypes.Email, email)
             };
+            if (isActive)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "ActiveUser"));
+            }
 
             //create web token
             JwtSecurityToken token = new JwtSecurityToken(
@@ -32,7 +36,7 @@ namespace StudyMATEUpload.Repository
                 audience: Startup.Configuration[AppConstant.Audience],
                 signingCredentials: signingCredentials,
                 claims: claims,
-                expires: DateTime.Now.AddMonths(3)
+                expires: hasDuration ? DateTime.Now + duration : DateTime.Now.AddDays(7)
                 );
             //return a writable token
             return new JwtSecurityTokenHandler().WriteToken(token);

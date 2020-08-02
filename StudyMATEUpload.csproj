@@ -54,9 +54,14 @@
     <Compile Remove="Migrations\20200710070937_DeleteField.Designer.cs" />
     <Compile Remove="Migrations\20200710071211_DeleteField.cs" />
     <Compile Remove="Migrations\20200710071211_DeleteField.Designer.cs" />
+    <Compile Remove="Migrations\20200712212017_QuizIdMod.cs" />
+    <Compile Remove="Migrations\20200712212017_QuizIdMod.Designer.cs" />
+    <Compile Remove="Migrations\20200712212905_Trickery.cs" />
+    <Compile Remove="Migrations\20200712212905_Trickery.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\assets\" />
     <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 

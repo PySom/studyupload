@@ -50,18 +50,19 @@ namespace StudyMATEUpload.Controllers
             {
                 payload = await ValidateAsync(request.IdToken, new ValidationSettings
                 {
-                    Audience = new[] { "YOUR_CLIENT_ID" }
+                    Audience = new[] { "598105055249-eeim29vgq4e3lese6hvn2bt8n1epkt7q.apps.googleusercontent.com" }
                 });
                 // It is important to add your ClientId as an audience in order to make sure
                 // that the token is for your application!
             }
-            catch
+            catch(Exception ex)
             {
+                Console.WriteLine($"message: {ex.Message}");
                 // Invalid token
             }
 
             var (token, whoLoggedIn, error) = await _acc.GetOrCreateExternalGoogleLoginUser("google", payload.Subject, payload.Email, 
-                payload.GivenName, payload.FamilyName, request.Role, payload.EmailVerified);
+                payload.GivenName, payload.FamilyName, request.Role, payload.EmailVerified, payload.Picture);
             if (token != null)
             {
                 UserViewModel dto = whoLoggedIn.Convert<ApplicationUser, UserViewModel>(_mapper);
@@ -118,10 +119,7 @@ namespace StudyMATEUpload.Controllers
         {
             var userEmail = GetUserEmailFromToken();
             if (userEmail == null) return NotFound();
-            UserViewModel user = await _acc.Item()
-                                            .Where(u => u.Email.ToLower() == userEmail.ToLower())
-                                            .Select(u => u.Convert<ApplicationUser, UserViewModel>(_mapper))
-                                            .FirstOrDefaultAsync();
+            UserViewModel user = await _acc.FindByEmailAsync(userEmail);
             return Ok(user);
         }
 
@@ -260,18 +258,10 @@ namespace StudyMATEUpload.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _acc.Item().Where(u => u.Email.Equals(model.Email)).FirstOrDefaultAsync();
-                if (user != null)
-                {
-                    if (code == user.Code && user.CodeIssued <= user.CodeWillExpire)
-                    {
-                        var (succeeded, _, error) = await _acc.ForgotPassword(model, code);
-                        if (succeeded) return Ok(new { succeeded });
-                        return BadRequest(new { Message = error });
-                    }
-                    return BadRequest(new { Message = "code is invalid or has expired" });
-                }
-                return BadRequest(new { Message = "user not found" });
+                if (string.IsNullOrEmpty(code)) return BadRequest(new { Message = "Are you normal? Code kwanu?" });
+                var (succeeded, _, error) = await _acc.ForgotPassword(model, code);
+                if (succeeded) return Ok(new { succeeded });
+                return BadRequest(new { Message = error });
             }
             return BadRequest(new { Errors = ModelState.Values.SelectMany(e => e.Errors).ToList() });
 
@@ -370,7 +360,7 @@ namespace StudyMATEUpload.Controllers
                 }
             }
 
-            var positions = leaders.Where(u => u.Score != 0).OrderBy(u => u.Score).ToList();
+            var positions = leaders.Where(u => u.Score != 0).OrderByDescending(u => u.Score).ToList();
             var leadersWithPosition = new List<LeaderBoard>();
             int pos = 1;
             foreach (var position in positions)
@@ -416,7 +406,7 @@ namespace StudyMATEUpload.Controllers
             StringBuilder message = new StringBuilder(100);
             message.Append($"Dear {firstName},<br/><br/>");
             message.Append($"You requested a change in password.<br/>Kindly use this link to reset your password.<br/>The code will expire in less than two (2) days.<br/><br/>");
-            message.Append($"<a href='{Request.Scheme}://{Request.Host}/forgotpassword?code={code}'>Reset Password</a><br/><br/>");
+            message.Append($"<a href='https://studymate.ng/forgotpassword?code={code}'>Reset Password</a><br/><br/>");
             message.Append("Thank you.<br/><br/>Sincerely,<br/>Admin.");
             return message.ToString();
         }
@@ -426,7 +416,7 @@ namespace StudyMATEUpload.Controllers
             StringBuilder message = new StringBuilder(100);
             message.Append($"Dear {firstName},<br/><br/>");
             message.Append($"Please verify your email.<br/>The code will expire in less than two (2) days.<br/>");
-            message.Append($"<a href='{Request.Scheme}://{Request.Host}/verifyemail?code={code}'>Verify Email</a><br/><br/>");
+            message.Append($"<a href='https://studymate.ng/verifyemail?code={code}'>Verify Email</a><br/><br/>");
             message.Append("Thank you.<br/><br/>Sincerely,<br/>Admin.");
             return message.ToString();
         }

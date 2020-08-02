@@ -20,28 +20,48 @@ namespace StudyMATEUpload.Repository.Generics
     {
         private readonly IMapper _mapper;
         private readonly AuthRepository _auth;
+        private readonly IModelManager<UserCourse> _usercourse;
+        private readonly IModelManager<Course> _course;
 
         public UserManager()
         {
 
         }
-        public UserManager(ApplicationDbContext context, IMapper mapper, AuthRepository auth) : base(context)
+        public UserManager(ApplicationDbContext context, IMapper mapper, 
+            AuthRepository auth, IModelManager<UserCourse> usercourse, 
+            IModelManager<Course> course) : base(context)
         {
             _mapper = mapper;
             _auth = auth;
+            _usercourse = usercourse;
+            _course = course;
         }
 
         public async ValueTask<(string, ApplicationUser, string)> GetOrCreateExternalGoogleLoginUser(string provider, 
-            string key, string email, string firstName, string lastName, Role role, bool isVerified)
+            string key, string email, string firstName, string lastName, Role role, bool isVerified, string picture)
         {
             // Login already linked to a user
-            var user = await Item().FirstOrDefaultAsync(u => u.Provider.ToLower() == provider.ToLower() && key == u.ProviderKey);
-            if (user != null) return (_auth.GetToken(email, Enum.GetName(typeof(Role), user.Role)), user, null);
+            var user = await Item().Include(u => u.UserSubscriptions)
+                .ThenInclude(s => s.Subscription)
+                .FirstOrDefaultAsync(u => u.Provider.ToLower() == provider.ToLower() && key == u.ProviderKey);
+            if (user != null)
+            {
+                UserSubscription userSub = user.UserSubscriptions.Where(u => u.StartedOn + new TimeSpan(u.Subscription.Duration, 0, 0, 0) >= DateTime.Now).FirstOrDefault();
+                TimeSpan durationLeft = new TimeSpan(0, 0, 0);
+                bool hasDuration = false;
+                if(userSub is object)
+                {
+                    durationLeft = (userSub.StartedOn + new TimeSpan(userSub.Subscription.Duration, 0, 0, 0)) - DateTime.Now;
+                    hasDuration = durationLeft > new TimeSpan(0,0,0,0);
+                    user.IsSubscribed = hasDuration;
+                }
+                return (_auth.GetToken(email, Enum.GetName(typeof(Role), user.Role), userSub is object, durationLeft, hasDuration), user, null);
+            }
 
-            user = await Item().FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+            user = await Item().FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower() && u.Provider != provider);
             if (user == null)
             {
-                // No user exists with this email address, we create a new one
+                // No user exists with this email address and provider, we create a new one
                 user = new ApplicationUser
                 {
                     Email = email,
@@ -49,6 +69,7 @@ namespace StudyMATEUpload.Repository.Generics
                     FirstName = firstName,
                     SurName = lastName,
                     ProviderKey = key,
+                    Image = picture,
                     Role = role,
                     IsVerified = isVerified,
                     VerifiedOn = DateTime.Now
@@ -66,8 +87,9 @@ namespace StudyMATEUpload.Repository.Generics
                 if (!s) return (null, null, e);
                 user = u;
             }
+            await AddUserCoursesAsync(user.Id);
 
-            return (_auth.GetToken(email, Enum.GetName(typeof(Role), user.Role)), user, null);
+            return (_auth.GetToken(email, Enum.GetName(typeof(Role), user.Role), false, new TimeSpan(0,0,0), false), user, null);
         }
 
         
@@ -83,7 +105,11 @@ namespace StudyMATEUpload.Repository.Generics
                 user.PasswordHash = passwordHash;
                 try
                 {
-                    await Add(user);
+                    var (success, addedUser, message) = await Add(user);
+                    if(success)
+                    {
+                        await AddUserCoursesAsync(addedUser.Id);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -95,20 +121,69 @@ namespace StudyMATEUpload.Repository.Generics
 
         }
 
+        private async Task AddUserCoursesAsync(int uid)
+        {
+            string cca = "CREATIVE AND CULTURAL ART";
+            string jmaths = "Mathematics";
+            string fmaths = "Further Mathematics";
+            string chemistry = "Chemistry";
+            var getDefaultUserCourses = await _course.Item()
+                .Where(c => c.Name.ToLower() == cca.ToLower() ||
+                        (c.Name.ToLower() == jmaths.ToLower() && c.StudyLevel == StudyLevel.Junior) ||
+                        c.Name.ToLower() == fmaths.ToLower() ||
+                        c.Name.ToLower() == chemistry.ToLower())
+                .Select(c => new { c.Id })
+                .ToListAsync();
+            var userCoursesToAdd = getDefaultUserCourses
+                .Select(gd => new UserCourse { CourseId = gd.Id, UserId = uid }).ToList();
+            var _ = await _usercourse.Add(userCoursesToAdd);
+        }
+
         public async ValueTask<(string, ApplicationUser, string)> LoginUser(LoginViewModel model)
         {
             var loginPassword = model.Password;
-            var user = await Item().Where(x => x.Email.ToLower() == model.Email.ToLower())
+            var user = await Item().Include(u => u.UserSubscriptions).ThenInclude(s => s.Subscription)
+                .Where(x => x.Email.ToLower() == model.Email.ToLower())
                                                 .FirstOrDefaultAsync();
             if (user == null) { return (null, null, "no such user in the database"); }
 
             string incomingHash = Hash.GetHashedValue(loginPassword);
             if (incomingHash != user.PasswordHash)
             {
-                return (null, null, "password do not match");
+                return (null, null, "hmmm! Something is fishy. The username or password is incorrect");
             }
-            return (_auth.GetToken(model.Email, Enum.GetName(typeof(Role), user.Role)), user, null);
+            UserSubscription userSub = user.UserSubscriptions.Where(u => u.StartedOn + new TimeSpan(u.Subscription.Duration, 0, 0, 0) >= DateTime.Now).FirstOrDefault();
+            TimeSpan durationLeft = new TimeSpan(0, 0, 0);
+            bool hasDuration = false;
+            if (userSub is object)
+            {
+                durationLeft = (userSub.StartedOn + new TimeSpan(userSub.Subscription.Duration, 0, 0, 0)) - DateTime.Now;
+                hasDuration = durationLeft > new TimeSpan(0, 0, 0, 0);
+                user.IsSubscribed = hasDuration;
+            }
+            return (_auth.GetToken(model.Email, Enum.GetName(typeof(Role), user.Role), userSub is object, durationLeft, hasDuration), user, null);
         }
+
+
+        public async ValueTask<UserViewModel> FindByEmailAsync(string email)
+        {
+            var user = await Item().Include(u => u.UserSubscriptions).ThenInclude(s => s.Subscription)
+                .Where(x => x.Email.ToLower() == email.ToLower())
+                 .FirstOrDefaultAsync();
+            if (user is null) { return null; }
+            UserSubscription userSub = user.UserSubscriptions.Where(u => u.StartedOn + new TimeSpan(u.Subscription.Duration, 0, 0, 0) >= DateTime.Now).FirstOrDefault();
+            TimeSpan durationLeft = new TimeSpan(0, 0, 0);
+            bool hasDuration = false;
+            if (userSub is object)
+            {
+                durationLeft = (userSub.StartedOn + new TimeSpan(userSub.Subscription.Duration, 0, 0, 0)) - DateTime.Now;
+                hasDuration = durationLeft > new TimeSpan(0, 0, 0, 0);
+                user.IsSubscribed = hasDuration;
+            }
+            return _mapper.Map<UserViewModel>(user);
+        }
+
+
 
         public async ValueTask<(bool, ApplicationUser, string)> ChangePassword(PatchKnownPasswordDTO patch)
         {
@@ -179,20 +254,15 @@ namespace StudyMATEUpload.Repository.Generics
 
         public async ValueTask<(bool, ApplicationUser, string)> ForgotPassword(PatchUnknownPasswordDTO patch, string code)
         {
-            ApplicationUser user = await FindOne(u => u.Email.ToLower() == patch.Email.ToLower() && !u.Deleted);
+            var user = await Item().Where(u => u.Email.Equals(patch.Email)).FirstOrDefaultAsync();
             if (user != null)
             {
                 if (code == user.Code && user.CodeIssued <= user.CodeWillExpire)
-                {
-
-                }
-                if (patch.NewPassword == patch.ConfirmNewPassword)
                 {
                     string passwordHash = Hash.GetHashedValue(patch.NewPassword);
                     user.PasswordHash = passwordHash;
                     return await Update(user);
                 }
-
             }
             return (false, null, "user not found"); ;
         }

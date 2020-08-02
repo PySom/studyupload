@@ -9,10 +9,10 @@ namespace StudyMATEUpload.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public bool Deleted { get; set; }
         [ForeignKey("QuizId")]
         public Quiz Quiz { get; set; }
-        public bool Deleted { get; set; }
-        public int? QUizId { get; set; }
+        public int? QuizId { get; set; }
         [ForeignKey("VideoId")]
         public Video Video { get; set; }
         public int? VideoId { get; set; }

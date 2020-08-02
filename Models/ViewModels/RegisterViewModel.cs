@@ -9,7 +9,7 @@ namespace StudyMATEUpload.Models.ViewModels
         public string SurName { get; set; }
         [Required]
         public string FirstName { get; set; }
-        [Required]
+
         [Phone]
         public string PhoneNumber { get; set; }
         [Required]
