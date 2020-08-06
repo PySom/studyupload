@@ -16,12 +16,14 @@ namespace StudyMATEUpload.Controllers
     {
         private readonly IModelManager<Test> _repo;
         private readonly IModelManager<Quiz> _quiz;
+        private readonly IModelManager<UserTest> _ut;
         private readonly IMapper _mapper;
-        public TestsController(IModelManager<Test> repo, IMapper mapper, IModelManager<Quiz> quiz)
+        public TestsController(IModelManager<Test> repo, IMapper mapper, IModelManager<Quiz> quiz, IModelManager<UserTest> userTests)
         {
             _repo = repo;
             _mapper = mapper;
             _quiz = quiz;
+            _ut = userTests;
         }
 
         [HttpGet]
@@ -75,12 +77,15 @@ namespace StudyMATEUpload.Controllers
         {
             var model = await _repo.Item()
                     .Where(q => q.Id == id && q.StudyType == study)
-                    .Include(t => t.Quizes.Where(q => q.IncludeThis))
+                    .Include(t => t.Quizes.Where(q => q.IncludeThis).OrderBy(q => q.QuestionNumber))
                         .ThenInclude(q => q.Options)
-                    .Include(t => t.UserTests.Where(ut => ut.UserCourse.UserId == uid))
-                        .ThenInclude(u => u.UserQuizzes)
+                    //.Include(t => t.UserTests.Where(ut => ut.UserCourse.UserId == uid))
+                    //    .ThenInclude(u => u.UserQuizzes)
                     .FirstOrDefaultAsync();
+            
             if (model == null) return NotFound();
+            var utests = await _ut.Item().Where(ut => ut.UserCourse.UserId == uid && ut.TestId == id).Include(u => u.UserQuizzes).ToListAsync();
+            model.UserTests = utests;
             return Ok(model);
         }
 

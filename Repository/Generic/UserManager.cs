@@ -58,7 +58,7 @@ namespace StudyMATEUpload.Repository.Generics
                 return (_auth.GetToken(email, Enum.GetName(typeof(Role), user.Role), userSub is object, durationLeft, hasDuration), user, null);
             }
 
-            user = await Item().FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower() && u.Provider != provider);
+            user = await Item().FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
             if (user == null)
             {
                 // No user exists with this email address and provider, we create a new one
