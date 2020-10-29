@@ -22,8 +22,6 @@ namespace StudyMATEUpload.Controllers
             _test = test;
         }
 
-        [HttpGet]
-
         [HttpGet("withparams/{courseId:int}/user/{userId:int}")]
         public async ValueTask<IActionResult> GetUserCoursesWithExtras(int courseId, int userId)
         {

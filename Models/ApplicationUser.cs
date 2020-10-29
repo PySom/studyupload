@@ -40,6 +40,13 @@ namespace StudyMATEUpload.Models
         public ICollection<Feedback> UserFeedbacks { get; set; }
         public ICollection<UserSubscription> UserSubscriptions { get; set; }
         public ICollection<UserAward> UserAwards { get; set; }
+        [InverseProperty(nameof(Referral.User))]
+        public ICollection<Referral> Referrals { get; set; }
+
+        [NotMapped]
+        [ForeignKey("ReferralId")]
+        public Referral User { get; set; }
+        public int? ReferralId { get; set; }
     }
 
     namespace DTOs
@@ -65,6 +72,7 @@ namespace StudyMATEUpload.Models
             public ICollection<UserFeedback> UserFeedbacks { get; set; }
             public ICollection<UserSubscription> UserSubscriptions { get; set; }
             public ICollection<UserAward> UserAwards { get; set; }
+            public ICollection<Referral> Referrals { get; set; }
         }
     }
 }

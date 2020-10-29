@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudyMATEUpload.Models
 {
+    
     public class Referral : IModel
     {
         [Key]
@@ -19,6 +20,8 @@ namespace StudyMATEUpload.Models
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
         public int UserId { get; set; }
+
+        public ICollection<ApplicationUser> Referrals { get; set; }
 
     }
 

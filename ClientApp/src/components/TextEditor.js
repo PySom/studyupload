@@ -25,7 +25,16 @@ class TextEditor extends React.Component {
         console.log({ content })
         this.props.handleChange(content)
     }
-    
+
+    //from https://stackoverflow.com/questions/30993836/paste-content-as-plain-text-in-summernote-editor
+    //Thank you https://stackoverflow.com/users/123415/jcuenod
+    onPaste = (e) => {
+        const bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+        e.preventDefault();
+        document.execCommand('insertText', false, bufferText);
+        console.log('pasted')
+    }
+
     onImageUpload = (fileList) => {
         this.setState({ showCode: true });
         const file = fileList[0];
@@ -33,12 +42,12 @@ class TextEditor extends React.Component {
         fileupload.append('file', file)
         console.log("about to push")
         api.create('files/upload', fileupload)
-            .then( url => {
+            .then(url => {
                 console.log("image url", url)
                 let htmlTag = ` <img src='${url.name}' class="img-responsive custom-img ${this.props.id}" alt="uploaded question helper visual" />`;
                 this.props.handleChange(`${this.props.value} ${htmlTag}`)
                 this.setState({ showCode: false })
-                
+
             }).catch(err => {
                 alert(err)
                 console.log(err)
@@ -47,29 +56,29 @@ class TextEditor extends React.Component {
 
     render() {
         console.log("value is", this.props.value)
-        const val = this.props.value
         return (
-                <ReactSummernote
-                    codeView={this.state.showCode}
-                    options={{
-                        height: 100,
-                        dialogsInBody: false,
-                        toolbar: [
-                            ['style', ['style']],
-                            ['font', ['bold', 'underline', 'clear']],
-                            ['fontname', ['fontname']],
-                            ['para', ['ul', 'ol', 'paragraph']],
-                            ['table', ['table']],
-                            ['insert', ['link', 'picture', 'video']],
-                            ['view', ['fullscreen', 'codeview']]
-                        ]
-                    }}
-                    value={this.props.value}
-                    defaultValue=""
-                    onChange={this.onChange}
-                    onImageUpload={this.onImageUpload}
-                />
-            
+            <ReactSummernote
+                codeView={this.state.showCode}
+                options={{
+                    height: 100,
+                    dialogsInBody: false,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview']]
+                    ]
+                }}
+                value={this.props.value}
+                defaultValue=""
+                onChange={this.onChange}
+                onPaste={this.onPaste}
+                onImageUpload={this.onImageUpload}
+            />
+
         );
     }
 }

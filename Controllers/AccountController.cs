@@ -61,7 +61,7 @@ namespace StudyMATEUpload.Controllers
                 // Invalid token
             }
 
-            var (token, whoLoggedIn, error) = await _acc.GetOrCreateExternalGoogleLoginUser("google", payload.Subject, payload.Email, 
+            var (token, whoLoggedIn, error) = await _acc.GetOrCreateExternalLoginUser("google", payload.Subject, payload.Email, 
                 payload.GivenName, payload.FamilyName, request.Role, payload.EmailVerified, payload.Picture);
             if (token != null)
             {
@@ -70,6 +70,25 @@ namespace StudyMATEUpload.Controllers
                 return Ok(dto);
             }
             return BadRequest(new { Message = error });
+        }
+
+        [HttpPost("auth/facebook")]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> FacebookLogin(FacebookLoginRequest request)
+        {
+            if (ModelState.IsValid)
+            {
+                var (token, whoLoggedIn, error) = await _acc.GetOrCreateExternalLoginUser(request.Provider, request.ProviderKey, request.Email,
+                request.FirstName, request.LastName, request.Role, true, request.Picture);
+                if (token != null)
+                {
+                    UserViewModel dto = whoLoggedIn.Convert<ApplicationUser, UserViewModel>(_mapper);
+                    dto.Token = token;
+                    return Ok(dto);
+                }
+                return BadRequest(new { Message = error });
+            }
+            return BadRequest(new { Errors = ModelState.Values.SelectMany(e => e.Errors).ToList() });
         }
 
         [HttpPost("login")]
@@ -168,6 +187,14 @@ namespace StudyMATEUpload.Controllers
             return Ok(user);
         }
 
+        [HttpGet("getreferrals")]
+        public async ValueTask<IActionResult> GetReferrals(int id)
+        {
+            var user = await _acc.GetUserExtras(id, "refer");
+            if (user == null) return NotFound();
+            return Ok(user);
+        }
+
 
         [Authorize]
         [HttpPut("user")]
@@ -188,7 +215,6 @@ namespace StudyMATEUpload.Controllers
         }
 
 
-        [Authorize]
         [HttpPatch("user/{id:int}")]
         public async ValueTask<IActionResult> Put([FromBody]JsonPatchDocument<ApplicationUser> patchDoc, int id)
         {
@@ -198,6 +224,7 @@ namespace StudyMATEUpload.Controllers
                 patchDoc.ApplyTo(model, ModelState);
                 if (ModelState.IsValid)
                 {
+
                     (bool succeeded, ApplicationUser updatedUser, string error) = await _acc.Update(model);
                     if (succeeded) return Ok(_mapper.Map<ApplicationUser, UserDTO>(updatedUser));
                     return BadRequest(new { Message = error });

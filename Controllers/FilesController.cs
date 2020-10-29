@@ -321,174 +321,179 @@ namespace LAAPI.Controllers
                 foreach (Paragraph paragraph in paragraphs)
                 {
                     var lev = paragraph.InnerText;
-                    if (!string.IsNullOrEmpty(lev) && lev[0] == '*'){
-                        lev = lev.Substring(1).Trim();
-                        level = (StudyMATEUpload.Enums.Level) Enum.Parse(typeof(StudyMATEUpload.Enums.Level), lev);
-                    }
-                    else
+                    if(!string.IsNullOrEmpty(lev) && lev.Trim().ToLower() != "beginner" && lev.Trim().ToLower() != "intermediate" && lev.Trim().ToLower() != "advanced")
                     {
-                        (string editedText, Rep rep, bool isNewRep) = HackLine(paragraph.InnerText, sb.ToString(), out bool status);
-
-                        if (status)
+                        if (!string.IsNullOrEmpty(lev) && lev[0] == '*')
                         {
-                            if (rep == Rep.Passage)
+                            lev = lev.Substring(1).Trim();
+                            level = (StudyMATEUpload.Enums.Level)Enum.Parse(typeof(StudyMATEUpload.Enums.Level), lev);
+                        }
+                        else
+                        {
+                            (string editedText, Rep rep, bool isNewRep) = HackLine(paragraph.InnerText, sb.ToString(), out bool status);
+
+                            if (status)
                             {
-                                repForPassage = Rep.Passage;
-                            }
-                            else if (rep == Rep.Section)
-                            {
-                                repForSection = Rep.Section;
-                            }
-                            if (editedText.EndsWith(']'))
-                            {
-                                if (repForPassage == Rep.Passage)
+                                if (rep == Rep.Passage)
                                 {
-                                    editedText = GetLoopCount(editedText);
+                                    repForPassage = Rep.Passage;
                                 }
-                                else if (repForSection == Rep.Section)
+                                else if (rep == Rep.Section)
                                 {
-                                    editedText = GetLoopCount(editedText, isPassage: false);
+                                    repForSection = Rep.Section;
                                 }
-                            }
-                            if (isNewRep && string.IsNullOrEmpty(sb.ToString()) || rep == Rep.Continue)
-                            {
-                                if (string.IsNullOrEmpty(sb.ToString()))
+                                if (editedText.EndsWith(']'))
                                 {
-                                    currentRep = rep;
+                                    if (repForPassage == Rep.Passage)
+                                    {
+                                        editedText = GetLoopCount(editedText);
+                                    }
+                                    else if (repForSection == Rep.Section)
+                                    {
+                                        editedText = GetLoopCount(editedText, isPassage: false);
+                                    }
                                 }
-                                sb.Append(editedText + "\n");
-                            }
-                            else
-                            {
-                                string mainText = sb.ToString().Trim();
-                                switch (currentRep)
+                                if (isNewRep && string.IsNullOrEmpty(sb.ToString()) || rep == Rep.Continue)
                                 {
-                                    case Rep.Answer:
-                                        quiz.AnswerUrl = mainText;
-                                        (bool succeded, Quiz qq, string error) = await _quiz.Update(quiz);
-                                        quiz = qq;
+                                    if (string.IsNullOrEmpty(sb.ToString()))
+                                    {
+                                        currentRep = rep;
+                                    }
+                                    sb.Append(editedText + "\n");
+                                }
+                                else
+                                {
+                                    string mainText = sb.ToString().Trim();
+                                    switch (currentRep)
+                                    {
+                                        case Rep.Answer:
+                                            quiz.AnswerUrl = mainText;
+                                            (bool succeded, Quiz qq, string error) = await _quiz.Update(quiz);
+                                            quiz = qq;
 
-                                        break;
-                                    case Rep.Option:
-                                    case Rep.Correct:
-                                        Option option = new Option { IsMathJax = HasMathJax(mainText), Content = mainText, PracticeId = quiz.Id };
-                                        (bool optionSucceeded, Option op, string optionError) = await _option.Add(option);
-                                        bool quizChanged = false;
-                                        if ((countPassge != previousCountPassge && previousCountPassge < totalLoop) || newPassage)
-                                        {
-                                            if (newPassage)
-                                            {
-                                                newPassage = false;
-                                            }
-                                            previousCountPassge = countPassge;
-                                            if (!string.IsNullOrEmpty(passage))
-                                            {
-                                                if (countPassge == 1)
-                                                {
-                                                    quiz.IsFirstPassage = true;
-                                                }
-                                                quiz.Passage = passage;
-                                                quizChanged = true;
-                                            }
-                                        }
-
-                                        if ((countSection != previousCountSection && previousCountSection < totalLoopSection) || newSection)
-                                        {
-                                            if (newSection)
-                                            {
-                                                newSection = false;
-                                            }
-                                            previousCountSection = countSection;
-                                            if (!string.IsNullOrEmpty(section))
-                                            {
-                                                if (countSection == 1)
-                                                {
-                                                    quiz.IsFirstSection = true;
-                                                }
-                                                quiz.Section = section;
-                                                quizChanged = true;
-                                            }
-                                        }
-
-
-                                        if (currentRep == Rep.Correct)
-                                        {
-                                            quiz.AnswerId = op.Id;
-                                            quizChanged = true;
-
-                                        }
-                                        if (quizChanged)
-                                        {
-                                            await _quiz.Update(quiz);
-                                        }
-                                        break;
-                                    case Rep.Question:
-
-                                        quiz = new Quiz { Question = mainText, TestId = test.Id, Level = level, QuestionNumber = totalQuestions + 1, IncludeThis = true, IsQuestionMathJax = HasMathJax(mainText) };
-                                        (bool quizSucceeded, Quiz newQuiz, string quizError) = await _quiz.Add(quiz);
-                                        if (quizSucceeded)
-                                        {
-                                            quiz = newQuiz;
-                                            totalQuestions += 1;
-
-                                            if (countPassge == totalLoop)
+                                            break;
+                                        case Rep.Option:
+                                        case Rep.Correct:
+                                            Option option = new Option { IsMathJax = HasMathJax(mainText), Content = mainText, PracticeId = quiz.Id };
+                                            (bool optionSucceeded, Option op, string optionError) = await _option.Add(option);
+                                            bool quizChanged = false;
+                                            if ((countPassge != previousCountPassge && previousCountPassge < totalLoop) || newPassage)
                                             {
                                                 if (newPassage)
                                                 {
-                                                    countPassge = 1;
-                                                    previousCountPassge = 0;
+                                                    newPassage = false;
                                                 }
+                                                previousCountPassge = countPassge;
+                                                if (!string.IsNullOrEmpty(passage))
+                                                {
+                                                    if (countPassge == 1)
+                                                    {
+                                                        quiz.IsFirstPassage = true;
+                                                    }
+                                                    quiz.Passage = passage;
+                                                    quizChanged = true;
+                                                }
+                                            }
 
-                                            }
-                                            else
-                                            {
-                                                countPassge += 1;
-                                            }
-                                            if (countSection == totalLoopSection)
+                                            if ((countSection != previousCountSection && previousCountSection < totalLoopSection) || newSection)
                                             {
                                                 if (newSection)
                                                 {
-                                                    countSection = 1;
-                                                    previousCountSection = 0;
+                                                    newSection = false;
                                                 }
+                                                previousCountSection = countSection;
+                                                if (!string.IsNullOrEmpty(section))
+                                                {
+                                                    if (countSection == 1)
+                                                    {
+                                                        quiz.IsFirstSection = true;
+                                                    }
+                                                    quiz.Section = section;
+                                                    quizChanged = true;
+                                                }
+                                            }
+
+
+                                            if (currentRep == Rep.Correct)
+                                            {
+                                                quiz.AnswerId = op.Id;
+                                                quizChanged = true;
 
                                             }
-                                            else
+                                            if (quizChanged)
                                             {
-                                                countSection += 1;
+                                                await _quiz.Update(quiz);
                                             }
-                                            if (newPassage)
-                                            {
-                                                totalLoop = currentLoopPC;
-                                            }
-                                            if (newSection)
-                                            {
-                                                totalLoopSection = currentLoopSC;
-                                            }
-                                        }
-                                        else return BadRequest(new { Message = quizError });
-                                        break;
-                                    case Rep.Passage:
-                                        passage = mainText;
-                                        repForPassage = Rep.None;
-                                        newPassage = true;
-                                        break;
-                                    case Rep.Section:
-                                        section = mainText;
-                                        repForSection = Rep.None;
-                                        newSection = true;
-                                        break;
-                                    case Rep.None:
-                                        break;
+                                            break;
+                                        case Rep.Question:
 
+                                            quiz = new Quiz { Question = mainText, TestId = test.Id, Level = level, QuestionNumber = totalQuestions + 1, IncludeThis = true, IsQuestionMathJax = HasMathJax(mainText) };
+                                            (bool quizSucceeded, Quiz newQuiz, string quizError) = await _quiz.Add(quiz);
+                                            if (quizSucceeded)
+                                            {
+                                                quiz = newQuiz;
+                                                totalQuestions += 1;
+
+                                                if (countPassge == totalLoop)
+                                                {
+                                                    if (newPassage)
+                                                    {
+                                                        countPassge = 1;
+                                                        previousCountPassge = 0;
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    countPassge += 1;
+                                                }
+                                                if (countSection == totalLoopSection)
+                                                {
+                                                    if (newSection)
+                                                    {
+                                                        countSection = 1;
+                                                        previousCountSection = 0;
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    countSection += 1;
+                                                }
+                                                if (newPassage)
+                                                {
+                                                    totalLoop = currentLoopPC;
+                                                }
+                                                if (newSection)
+                                                {
+                                                    totalLoopSection = currentLoopSC;
+                                                }
+                                            }
+                                            else return BadRequest(new { Message = quizError });
+                                            break;
+                                        case Rep.Passage:
+                                            passage = mainText;
+                                            repForPassage = Rep.None;
+                                            newPassage = true;
+                                            break;
+                                        case Rep.Section:
+                                            section = mainText;
+                                            repForSection = Rep.None;
+                                            newSection = true;
+                                            break;
+                                        case Rep.None:
+                                            break;
+
+                                    }
+                                    sb = new StringBuilder(100);
+                                    sb.Append(editedText + "\n");
+                                    currentRep = rep;
                                 }
-                                sb = new StringBuilder(100);
-                                sb.Append(editedText + "\n");
-                                currentRep = rep;
-                            }
 
+                            }
                         }
                     }
+                    
                     
                 }
                 test.QuestionNo = totalQuestions;

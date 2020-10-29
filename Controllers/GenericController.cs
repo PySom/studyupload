@@ -119,8 +119,8 @@ namespace StudyMATEUpload.Controllers
             return BadRequest(new { Errors = ModelState.Values.SelectMany(e => e.Errors).ToList() });
         }
 
-        [HttpPut]
-        public IActionResult Put(ICollection<T> models)
+        [HttpPut("multiple")]
+        public IActionResult Put([FromBody]ICollection<T> models)
         {
             if (ModelState.IsValid)
             {

@@ -37,15 +37,27 @@ namespace StudyMATEUpload.Repository.Generics
             _course = course;
         }
 
-        public async ValueTask<(string, ApplicationUser, string)> GetOrCreateExternalGoogleLoginUser(string provider, 
+        public async ValueTask<(string, ApplicationUser, string)> GetOrCreateExternalLoginUser(string provider, 
             string key, string email, string firstName, string lastName, Role role, bool isVerified, string picture)
         {
             // Login already linked to a user
             var user = await Item().Include(u => u.UserSubscriptions)
                 .ThenInclude(s => s.Subscription)
-                .FirstOrDefaultAsync(u => u.Provider.ToLower() == provider.ToLower() && key == u.ProviderKey);
+                .FirstOrDefaultAsync(u => u.Email.ToLower() == email.Trim().ToLower());
+
+            //there is a user
             if (user != null)
             {
+                //user has not used this provider key
+                if ( user.Provider?.ToLower() != provider?.ToLower() && key != user.ProviderKey)
+                {
+                    //user exists but hasn't used external.
+                    user.Provider = provider;
+                    user.ProviderKey = key;
+                    var (s, u, e) = await Update(user);
+                    if (!s) return (null, null, e);
+                    user = u;
+                }                
                 UserSubscription userSub = user.UserSubscriptions.Where(u => u.StartedOn + new TimeSpan(u.Subscription.Duration, 0, 0, 0) >= DateTime.Now).FirstOrDefault();
                 TimeSpan durationLeft = new TimeSpan(0, 0, 0);
                 bool hasDuration = false;
@@ -58,10 +70,9 @@ namespace StudyMATEUpload.Repository.Generics
                 return (_auth.GetToken(email, Enum.GetName(typeof(Role), user.Role), userSub is object, durationLeft, hasDuration), user, null);
             }
 
-            user = await Item().FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
-            if (user == null)
+            // No user exists with this email address and provider, we create a new one
+            else
             {
-                // No user exists with this email address and provider, we create a new one
                 user = new ApplicationUser
                 {
                     Email = email,
@@ -78,17 +89,9 @@ namespace StudyMATEUpload.Repository.Generics
                 var (s, u, e) = await Add(user);
                 if (!s) return (null, null, e);
                 user = u;
-            }
-            else
-            {
-                user.Provider = provider;
-                user.ProviderKey = key;
-                var (s, u, e) = await Update(user);
-                if (!s) return (null, null, e);
-                user = u;
-            }
-            await AddUserCoursesAsync(user.Id);
 
+                //await AddUserCoursesAsync(user.Id);
+            }
             return (_auth.GetToken(email, Enum.GetName(typeof(Role), user.Role), false, new TimeSpan(0,0,0), false), user, null);
         }
 
@@ -106,10 +109,10 @@ namespace StudyMATEUpload.Repository.Generics
                 try
                 {
                     var (success, addedUser, message) = await Add(user);
-                    if(success)
-                    {
-                        await AddUserCoursesAsync(addedUser.Id);
-                    }
+                    //if(success)
+                    //{
+                    //    await AddUserCoursesAsync(addedUser.Id);
+                    //}
                 }
                 catch (Exception ex)
                 {
@@ -242,6 +245,15 @@ namespace StudyMATEUpload.Repository.Generics
                     return await Item().Where(u => u.Id == id)
                                             .Include(u => u.UserAwards)
                                                 .ThenInclude(u => u.Award)
+                                            .Select(u => u.Convert<ApplicationUser, UserDTO>(_mapper))
+                                            .FirstOrDefaultAsync();
+                }
+
+                if (what == "refer")
+                {
+                    return await Item().Where(u => u.Id == id)
+                                            .Include(u => u.Referrals)
+                                                .ThenInclude(u => u.Referrals)
                                             .Select(u => u.Convert<ApplicationUser, UserDTO>(_mapper))
                                             .FirstOrDefaultAsync();
                 }

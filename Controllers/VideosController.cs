@@ -19,7 +19,7 @@ namespace StudyMATEUpload.Controllers
         {}
 
 
-        [HttpPut]
+        [HttpPut("withname")]
         public async Task<IActionResult> UpdateWithName([FromBody] ICollection<VideoUpdate> models)
         {
             if (ModelState.IsValid)
